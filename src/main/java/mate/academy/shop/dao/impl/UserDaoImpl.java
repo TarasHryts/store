@@ -4,12 +4,16 @@ import mate.academy.shop.anotation.Dao;
 import mate.academy.shop.dao.UserDao;
 import mate.academy.shop.model.User;
 import mate.academy.shop.storage.Storage;
+import org.apache.log4j.Logger;
 
+import java.io.FileReader;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @Dao
 public class UserDaoImpl implements UserDao {
+    final static Logger logger = Logger.getLogger(FileReader.class);
+
     @Override
     public User create(User user) {
         Storage.users.add(user);
@@ -37,6 +41,7 @@ public class UserDaoImpl implements UserDao {
                 return user;
             }
         }
+        logger.error("Can't find user with id " + user.getId());
         throw new NoSuchElementException("Can't find user with id " + user.getId());
     }
 

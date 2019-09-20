@@ -5,15 +5,18 @@ import mate.academy.shop.model.Order;
 import mate.academy.shop.model.User;
 import mate.academy.shop.service.OrderService;
 import mate.academy.shop.service.UserService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
 public class GetAllOrdersController extends HttpServlet {
+    final static Logger logger = Logger.getLogger(FileReader.class);
     private static final Long DEFAULT_USER = 0L;
 
     @Inject
@@ -23,6 +26,7 @@ public class GetAllOrdersController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        logger.info(this.getClass().getName() + "start working");
         List<Order> orders = orderService.getAllOrdersForUser(DEFAULT_USER);
         User user = userService.get(DEFAULT_USER);
         req.setAttribute("orders", orders);
