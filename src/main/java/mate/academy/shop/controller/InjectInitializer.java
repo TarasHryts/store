@@ -1,16 +1,15 @@
 package mate.academy.shop.controller;
 
+import java.io.FileReader;
+import java.util.List;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.anotation.Injector;
 import mate.academy.shop.model.Item;
 import mate.academy.shop.service.ItemService;
 import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
-
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import java.io.FileReader;
-import java.util.List;
 
 public class InjectInitializer implements ServletContextListener {
     final static Logger logger = Logger.getLogger(FileReader.class);
@@ -23,7 +22,7 @@ public class InjectInitializer implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         try {
             logger.info(this.getClass().getName()
-                + "start working. Dependency injection started...");
+                    + "start working. Dependency injection started...");
             Injector.injectDependency();
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
@@ -39,6 +38,5 @@ public class InjectInitializer implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
-
     }
 }

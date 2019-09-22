@@ -1,18 +1,19 @@
 package mate.academy.shop.dao.impl;
 
+import java.io.FileReader;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import mate.academy.shop.anotation.Dao;
 import mate.academy.shop.dao.UserDao;
+import mate.academy.shop.exceptions.AuthenticationException;
 import mate.academy.shop.model.User;
 import mate.academy.shop.storage.Storage;
 import org.apache.log4j.Logger;
 
-import java.io.FileReader;
-import java.util.List;
-import java.util.NoSuchElementException;
-
 @Dao
 public class UserDaoImpl implements UserDao {
-    final static Logger logger = Logger.getLogger(FileReader.class);
+    static final Logger logger = Logger.getLogger(FileReader.class);
 
     @Override
     public User create(User user) {
@@ -50,5 +51,23 @@ public class UserDaoImpl implements UserDao {
         User user = get(id);
         Storage.users.removeIf(x -> id.equals(x.getId()));
         return user;
+    }
+
+    @Override
+    public User login(String login, String password) throws AuthenticationException {
+        Optional<User> user = Storage.users.stream()
+                .filter(x -> x.getLogin().equals(login))
+                .findFirst();
+        if (user.isEmpty() || !user.get().getPassword().equals(password)) {
+            throw new AuthenticationException("incorrect username or password");
+        }
+        return user.get();
+    }
+
+    @Override
+    public Optional<User> getByToken(String token) {
+        return Storage.users.stream()
+                .filter(x -> x.getToken().equals(token))
+                .findFirst();
     }
 }

@@ -1,9 +1,8 @@
 package mate.academy.shop.model;
 
-import mate.academy.shop.factory.generators.UserIdGenerator;
-
 import java.util.ArrayList;
 import java.util.List;
+import mate.academy.shop.factory.generators.UserIdGenerator;
 
 public class User {
     private final Long id;
@@ -11,6 +10,24 @@ public class User {
     private String surname;
     private String login;
     private String password;
+    private String token;
+    private Bucket bucket;
+
+    public Bucket getBucket() {
+        return bucket;
+    }
+
+    public void setBucket(Bucket bucket) {
+        this.bucket = bucket;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -47,10 +64,10 @@ public class User {
         return "User{" + "id=" + id + ", name='" + name + '\'' + ", orders=" + orders + '}';
     }
 
-    public User(String name) {
-        this.id = UserIdGenerator.getIdGenerator();
+    public User(String name, Bucket bucket) {
+        this();
         this.name = name;
-        this.orders = new ArrayList<Order>();
+        this.bucket = bucket;
     }
 
     public User() {

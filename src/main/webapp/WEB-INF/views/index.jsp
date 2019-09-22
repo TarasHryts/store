@@ -12,10 +12,11 @@
 </head>
 <body>
 <H1>MENU</H1>
-<a href="/store_war_exploded/servlet/registration"><br />Registration</a>
-<a href="/store_war_exploded/servlet/getAllItems"><br />List Of Item</a>
-<a href="/store_war_exploded/servlet/bucket"><br />List Of Items In Bucket</a>
-<a href="/store_war_exploded/servlet/getAllUsers"><br />List Of Users</a>
-<a href="/store_war_exploded/servlet/showAllOrders"><br />List Of Orders</a>
+<a href="/store_war_exploded/registration"><br/>Registration</a>
+<a href="/store_war_exploded/login"><br/>Login</a>
+<a href="/store_war_exploded/servlet/getAllItems"><br/>List Of Item</a>
+<a href="/store_war_exploded/servlet/bucket"><br/>List Of Items In Bucket</a>
+<a href="/store_war_exploded/servlet/getAllUsers"><br/>List Of Users</a>
+<a href="/store_war_exploded/servlet/showAllOrders"><br/>List Of Orders</a>
 </body>
 </html>

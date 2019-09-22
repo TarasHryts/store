@@ -1,12 +1,11 @@
 package mate.academy.shop.service.impl;
 
+import java.util.List;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.anotation.Service;
 import mate.academy.shop.dao.ItemDao;
 import mate.academy.shop.model.Item;
 import mate.academy.shop.service.ItemService;
-
-import java.util.List;
 
 @Service
 public class ItemServiceImpl implements ItemService {

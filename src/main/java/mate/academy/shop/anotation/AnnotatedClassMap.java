@@ -1,5 +1,8 @@
 package mate.academy.shop.anotation;
 
+import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Map;
 import mate.academy.shop.dao.BucketDao;
 import mate.academy.shop.dao.ItemDao;
 import mate.academy.shop.dao.OrderDao;
@@ -10,10 +13,6 @@ import mate.academy.shop.service.ItemService;
 import mate.academy.shop.service.OrderService;
 import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
-
-import java.io.FileReader;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AnnotatedClassMap {
     final static Logger logger = Logger.getLogger(FileReader.class);

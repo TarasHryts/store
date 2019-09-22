@@ -1,5 +1,4 @@
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <jsp:useBean id="users" scope="request" type="java.util.List<mate.academy.shop.model.User>"/>
 <jsp:useBean id="greeting" scope="request" type="java.lang.String"/>
@@ -16,7 +15,7 @@
     <title>All Users</title>
 </head>
 <body>
-Hello,  ${greeting}, Welcome to All Users page!
+Hello, ${greeting}, Welcome to All Users page!
 Users:
 <table border="1">
     <tr>
@@ -28,10 +27,10 @@ Users:
     <c:forEach var="user" items="${users}">
         <tr>
             <td>
-                <c:out value="${user.id}"  />
+                <c:out value="${user.id}"/>
             </td>
             <td>
-                <c:out value="${user.name}" />
+                <c:out value="${user.name}"/>
             </td>
             <td>
                 <a href="/store_war_exploded/servlet/showAllOrders?user_id=${user.id}">Show All Orders</a>

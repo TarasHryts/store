@@ -1,9 +1,8 @@
 package mate.academy.shop.model;
 
-import mate.academy.shop.factory.generators.OrderIdGenerator;
-
 import java.util.ArrayList;
 import java.util.List;
+import mate.academy.shop.factory.generators.OrderIdGenerator;
 
 public class Order {
     private final Long id;

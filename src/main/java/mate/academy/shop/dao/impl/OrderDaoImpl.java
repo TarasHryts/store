@@ -1,19 +1,18 @@
 package mate.academy.shop.dao.impl;
 
+import java.io.FileReader;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 import mate.academy.shop.anotation.Dao;
 import mate.academy.shop.dao.OrderDao;
 import mate.academy.shop.model.Order;
 import mate.academy.shop.storage.Storage;
 import org.apache.log4j.Logger;
 
-import java.io.FileReader;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
-
 @Dao
 public class OrderDaoImpl implements OrderDao {
-    final static Logger logger = Logger.getLogger(FileReader.class);
+    static final Logger logger = Logger.getLogger(FileReader.class);
 
     @Override
     public Order create(Order order) {

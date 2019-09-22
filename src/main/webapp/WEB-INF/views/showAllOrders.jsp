@@ -24,13 +24,13 @@
     <c:forEach var="order" items="${orders}">
         <tr>
             <td>
-                <c:out value="${order.userId}"  />
+                <c:out value="${order.userId}"/>
             </td>
             <td>
-                <c:out value="${user.name}"  />
+                <c:out value="${user.name}"/>
             </td>
             <td>
-                <c:out value="${order.id}" />
+                <c:out value="${order.id}"/>
             </td>
             <td>
                 <a href="/store_war_exploded/servlet/deleteOrder?order_id=${order.id}">Delete Order</a>

@@ -1,17 +1,14 @@
 package mate.academy.shop.model;
 
-import mate.academy.shop.factory.generators.BucketIdGenerator;
-
 import java.util.ArrayList;
 import java.util.List;
+import mate.academy.shop.factory.generators.BucketIdGenerator;
 
 public class Bucket {
     private Long id;
     private List<Item> items;
     private Long userId;
 
-    public Bucket() {
-    }
     public Bucket(Long userId) {
         this.id = BucketIdGenerator.getIdGenerator();
         items = new ArrayList<Item>();

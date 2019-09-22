@@ -1,5 +1,7 @@
 package mate.academy.shop.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.anotation.Service;
 import mate.academy.shop.dao.OrderDao;
@@ -7,9 +9,6 @@ import mate.academy.shop.dao.UserDao;
 import mate.academy.shop.model.Item;
 import mate.academy.shop.model.Order;
 import mate.academy.shop.service.OrderService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class OrderServiceImpl implements OrderService {
