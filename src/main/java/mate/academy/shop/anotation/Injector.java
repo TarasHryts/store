@@ -1,7 +1,6 @@
 package mate.academy.shop.anotation;
 
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
@@ -11,7 +10,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 public class Injector {
-    final static Logger logger = Logger.getLogger(FileReader.class);
+    private final static Logger logger = Logger.getLogger(Injector.class);
     private static final String PROJECT_MAIN_PACKAGE = "mate.academy.shop";
     private static List<Class> classes = new ArrayList<>();
 
@@ -20,7 +19,7 @@ public class Injector {
             logger.info("Injector start working");
             classes.addAll(getClasses(PROJECT_MAIN_PACKAGE));
         } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 

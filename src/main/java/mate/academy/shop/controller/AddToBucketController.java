@@ -1,6 +1,5 @@
 package mate.academy.shop.controller;
 
-import java.io.FileReader;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -15,7 +14,7 @@ import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class AddToBucketController extends HttpServlet {
-    final static Logger logger = Logger.getLogger(FileReader.class);
+    private final static Logger logger = Logger.getLogger(AddToBucketController.class);
 
     @Inject
     private static BucketService bucketService;

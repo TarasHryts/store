@@ -1,6 +1,5 @@
 package mate.academy.shop.controller;
 
-import java.io.FileReader;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 public class IndexController extends HttpServlet {
-    final static Logger logger = Logger.getLogger(FileReader.class);
+    private final static Logger logger = Logger.getLogger(IndexController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

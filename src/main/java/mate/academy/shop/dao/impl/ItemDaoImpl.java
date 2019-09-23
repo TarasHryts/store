@@ -1,6 +1,5 @@
 package mate.academy.shop.dao.impl;
 
-import java.io.FileReader;
 import java.util.List;
 import java.util.NoSuchElementException;
 import mate.academy.shop.anotation.Dao;
@@ -11,7 +10,7 @@ import org.apache.log4j.Logger;
 
 @Dao
 public class ItemDaoImpl implements ItemDao {
-    static final Logger logger = Logger.getLogger(FileReader.class);
+    private static final Logger logger = Logger.getLogger(ItemDaoImpl.class);
 
     @Override
     public Item create(Item item) {

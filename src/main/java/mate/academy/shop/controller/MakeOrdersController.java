@@ -1,6 +1,5 @@
 package mate.academy.shop.controller;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
@@ -16,7 +15,7 @@ import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class MakeOrdersController extends HttpServlet {
-    final static Logger logger = Logger.getLogger(FileReader.class);
+    private final static Logger logger = Logger.getLogger(MakeOrdersController.class);
     @Inject
     private static UserService userService;
     @Inject

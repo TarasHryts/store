@@ -1,6 +1,5 @@
 package mate.academy.shop.controller;
 
-import java.io.FileReader;
 import java.util.List;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -12,7 +11,7 @@ import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class InjectInitializer implements ServletContextListener {
-    final static Logger logger = Logger.getLogger(FileReader.class);
+    private final static Logger logger = Logger.getLogger(InjectInitializer.class);
     @Inject
     private static ItemService itemService;
     @Inject

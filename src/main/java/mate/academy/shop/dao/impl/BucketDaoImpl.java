@@ -1,6 +1,5 @@
 package mate.academy.shop.dao.impl;
 
-import java.io.FileReader;
 import java.util.NoSuchElementException;
 import mate.academy.shop.anotation.Dao;
 import mate.academy.shop.dao.BucketDao;
@@ -10,7 +9,7 @@ import org.apache.log4j.Logger;
 
 @Dao
 public class BucketDaoImpl implements BucketDao {
-    static final Logger logger = Logger.getLogger(FileReader.class);
+    private static final Logger logger = Logger.getLogger(BucketDaoImpl.class);
 
     @Override
     public Bucket create(Bucket bucket) {
