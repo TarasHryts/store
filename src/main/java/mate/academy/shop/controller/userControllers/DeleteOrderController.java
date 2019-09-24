@@ -1,4 +1,4 @@
-package mate.academy.shop.controller;
+package mate.academy.shop.controller.userControllers;
 
 import java.io.IOException;
 import java.util.List;

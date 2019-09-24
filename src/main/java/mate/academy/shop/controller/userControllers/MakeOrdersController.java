@@ -1,4 +1,4 @@
-package mate.academy.shop.controller;
+package mate.academy.shop.controller.userControllers;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,7 +30,7 @@ public class MakeOrdersController extends HttpServlet {
         Long userId = (Long) req.getSession(true).getAttribute("userId");
         Long bucketId = userService.get(userId).getBucket().getId();
         List<Item> items = bucketService.getAllItems(bucketId);
-        Order order = orderService.completeOrder(items, bucketId);
+        Order order = orderService.completeOrder(items, userId);
         bucketService.getAllItems(bucketId).clear();
         resp.sendRedirect(req.getContextPath() + "/servlet/showAllOrders");
     }

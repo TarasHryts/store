@@ -1,5 +1,8 @@
 package mate.academy.shop.controller;
 
+import static mate.academy.shop.model.Role.RoleName.ADMIN;
+import static mate.academy.shop.model.Role.RoleName.USER;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -9,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.exceptions.AuthenticationException;
+import mate.academy.shop.model.Role;
 import mate.academy.shop.model.User;
 import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
@@ -33,14 +37,24 @@ public class LoginController extends HttpServlet {
         String password = req.getParameter("psw");
         try {
             User user = userService.login(login, password);
-            HttpSession session = req.getSession(true);
-            session.setAttribute("userId", user.getId());
             Cookie cookie = new Cookie("MATE", user.getToken());
             resp.addCookie(cookie);
-            resp.sendRedirect(req.getContextPath() + "/index");
+            HttpSession session = req.getSession(true);
+            session.setAttribute("userId", user.getId());
+            if (verifyRole(user, USER)) {
+                resp.sendRedirect(req.getContextPath() + "/indexUserPanel");
+            }
+            if (verifyRole(user, ADMIN)) {
+                resp.sendRedirect(req.getContextPath() + "/indexAdminPanel");
+            }
         } catch (AuthenticationException e) {
             req.setAttribute("errorMsg", "Incorrect login or password");
             req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
         }
+    }
+
+    private boolean verifyRole(User user, Role.RoleName roleName) {
+        return user.getRoles().stream()
+                .anyMatch(x -> x.getRoleName().equals(roleName));
     }
 }
