@@ -1,15 +1,16 @@
 package mate.academy.shop.dao.impl;
 
+import java.util.List;
+import java.util.NoSuchElementException;
 import mate.academy.shop.anotation.Dao;
 import mate.academy.shop.dao.ItemDao;
 import mate.academy.shop.model.Item;
 import mate.academy.shop.storage.Storage;
-
-import java.util.List;
-import java.util.NoSuchElementException;
+import org.apache.log4j.Logger;
 
 @Dao
 public class ItemDaoImpl implements ItemDao {
+    private static final Logger logger = Logger.getLogger(ItemDaoImpl.class);
 
     @Override
     public Item create(Item item) {
@@ -34,6 +35,7 @@ public class ItemDaoImpl implements ItemDao {
                 return item;
             }
         }
+        logger.error("Can't find item with id " + item.getId());
         throw new NoSuchElementException("Can't find item with id " + item.getId());
     }
 

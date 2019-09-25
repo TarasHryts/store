@@ -1,18 +1,16 @@
 <%--
   Created by IntelliJ IDEA.
   User: Тарас
-  Date: 16.09.2019
-  Time: 17:59
+  Date: 23.09.2019
+  Time: 18:04
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>index</title>
+    <title>Access denied</title>
 </head>
 <body>
-<H1>MENU</H1>
-<a href="/store_war_exploded/registration"><br/>Registration</a>
-<a href="/store_war_exploded/login"><br/>Login</a>
+<h1>Sorry, requested page is denied for you</h1>
 </body>
 </html>

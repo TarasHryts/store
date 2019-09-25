@@ -1,16 +1,17 @@
 package mate.academy.shop.dao.impl;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 import mate.academy.shop.anotation.Dao;
 import mate.academy.shop.dao.OrderDao;
 import mate.academy.shop.model.Order;
 import mate.academy.shop.storage.Storage;
-
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
+import org.apache.log4j.Logger;
 
 @Dao
 public class OrderDaoImpl implements OrderDao {
+    private static final Logger logger = Logger.getLogger(OrderDaoImpl.class);
 
     @Override
     public Order create(Order order) {
@@ -42,6 +43,7 @@ public class OrderDaoImpl implements OrderDao {
                 return order;
             }
         }
+        logger.error("Can't find order with id " + order.getId());
         throw new NoSuchElementException("Can't find order with id " + order.getId());
     }
 

@@ -1,9 +1,10 @@
 package mate.academy.shop.service;
 
+import java.util.List;
+import java.util.Optional;
+import mate.academy.shop.exceptions.AuthenticationException;
 import mate.academy.shop.model.Order;
 import mate.academy.shop.model.User;
-
-import java.util.List;
 
 public interface UserService {
     User create(User user);
@@ -17,4 +18,8 @@ public interface UserService {
     User delete(Long id);
 
     List<User> getAll();
+
+    User login(String login, String password) throws AuthenticationException;
+
+    Optional<User> getByToken(String token);
 }

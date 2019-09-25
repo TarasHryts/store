@@ -1,8 +1,7 @@
 package mate.academy.shop.dao;
 
-import mate.academy.shop.model.Order;
-
 import java.util.List;
+import mate.academy.shop.model.Order;
 
 public interface OrderDao {
     Order create(Order order);

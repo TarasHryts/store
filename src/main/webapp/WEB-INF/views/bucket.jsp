@@ -27,13 +27,13 @@
     <c:forEach var="item" items="${items}">
         <tr>
             <td>
-                <c:out value="${item.id}" />
+                <c:out value="${item.id}"/>
             </td>
             <td>
-                <c:out value="${item.name}" />
+                <c:out value="${item.name}"/>
             </td>
             <td>
-                <c:out value="${item.price}" />
+                <c:out value="${item.price}"/>
             </td>
             <td>
                 <a href="/store_war_exploded/servlet/deleteItemFromBucket?item_id=${item.id}">Delete From Bucket</a>

@@ -1,14 +1,16 @@
 package mate.academy.shop.dao.impl;
 
+import java.util.NoSuchElementException;
 import mate.academy.shop.anotation.Dao;
 import mate.academy.shop.dao.BucketDao;
 import mate.academy.shop.model.Bucket;
 import mate.academy.shop.storage.Storage;
-
-import java.util.NoSuchElementException;
+import org.apache.log4j.Logger;
 
 @Dao
 public class BucketDaoImpl implements BucketDao {
+    private static final Logger logger = Logger.getLogger(BucketDaoImpl.class);
+
     @Override
     public Bucket create(Bucket bucket) {
         Storage.buckets.add(bucket);
@@ -33,6 +35,7 @@ public class BucketDaoImpl implements BucketDao {
                 return bucket;
             }
         }
+        logger.error("Can't find element with id: " + bucket.getId());
         throw new NoSuchElementException("Can't find element with id: " + bucket.getId());
     }
 
