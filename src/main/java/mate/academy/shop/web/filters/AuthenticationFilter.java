@@ -42,6 +42,7 @@ public class AuthenticationFilter implements Filter {
                     logger.info("User " + user.get().getLogin() + " was authenticated");
                     isLoggedIn = true;
                     chain.doFilter(servletRequest, servletResponse);
+                    return;
                 }
             }
         }

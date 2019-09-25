@@ -20,6 +20,7 @@ public class LogoutController extends HttpServlet {
                 resp.addCookie(cookie);
             }
         }
+        session.invalidate();
         resp.sendRedirect(req.getContextPath() + "/index");
     }
 }
