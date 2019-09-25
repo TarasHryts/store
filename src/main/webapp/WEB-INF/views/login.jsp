@@ -12,7 +12,7 @@
 </head>
 <body>
 <div>${errorMsg}</div>
-<form action="/store_war_exploded/login" method="post">
+<form action="/storeDB_war_exploded/login" method="post">
     <div class="container">
         <h1>Login</h1>
         <p>Please fill in this form to login.</p>

@@ -12,7 +12,7 @@
 </head>
 <body>
 <H1>MENU</H1>
-<a href="/store_war_exploded/registration"><br/>Registration</a>
-<a href="/store_war_exploded/login"><br/>Login</a>
+<a href="/storeDB_war_exploded/registration"><br/>Registration</a>
+<a href="/storeDB_war_exploded/login"><br/>Login</a>
 </body>
 </html>

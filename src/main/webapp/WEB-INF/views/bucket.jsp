@@ -14,7 +14,7 @@
 <body>
 <h1>Your Bucket Entry</h1>
 <h2>
-    <a href="/store_war_exploded/servlet/makeOrders">To Order</a>
+    <a href="/storeDB_war_exploded/servlet/makeOrders">To Order</a>
 </h2>
 <table border="1">
     <tr>
@@ -36,13 +36,13 @@
                 <c:out value="${item.price}"/>
             </td>
             <td>
-                <a href="/store_war_exploded/servlet/deleteItemFromBucket?item_id=${item.id}">Delete From Bucket</a>
+                <a href="/storeDB_war_exploded/servlet/deleteItemFromBucket?item_id=${item.id}">Delete From Bucket</a>
             </td>
 
         </tr>
     </c:forEach>
 </table>
-<a href="/store_war_exploded/servlet/getAllItems">Сontinue Shopping</a>
+<a href="/storeDB_war_exploded/servlet/getAllItems">Сontinue Shopping</a>
 
 </body>
 </html>

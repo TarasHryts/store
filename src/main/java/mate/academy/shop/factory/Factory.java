@@ -1,13 +1,16 @@
 package mate.academy.shop.factory;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import mate.academy.shop.dao.BucketDao;
 import mate.academy.shop.dao.ItemDao;
 import mate.academy.shop.dao.OrderDao;
 import mate.academy.shop.dao.UserDao;
 import mate.academy.shop.dao.impl.BucketDaoImpl;
-import mate.academy.shop.dao.impl.ItemDaoImpl;
 import mate.academy.shop.dao.impl.OrderDaoImpl;
 import mate.academy.shop.dao.impl.UserDaoImpl;
+import mate.academy.shop.jdbc.ItemDaoJdbcImpl;
 import mate.academy.shop.service.BucketService;
 import mate.academy.shop.service.ItemService;
 import mate.academy.shop.service.OrderService;
@@ -16,8 +19,23 @@ import mate.academy.shop.service.impl.BucketServiceImpl;
 import mate.academy.shop.service.impl.ItemServiceImpl;
 import mate.academy.shop.service.impl.OrderServiceImpl;
 import mate.academy.shop.service.impl.UserServiceImpl;
+import org.apache.log4j.Logger;
 
 public class Factory {
+    private static Logger logger = Logger.getLogger(Factory.class);
+    private static Connection connection;
+    static {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/newdatabase?" +
+                    "user=root&password=729313&serverTimezone=UTC");
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+            logger.error("Can't establish connection to our DB", e);
+        }
+    }
+
+
     private static BucketDao bucketDao;
     private static ItemDao itemDao;
     private static OrderDao orderDao;
@@ -36,10 +54,8 @@ public class Factory {
     }
 
     public static ItemDao getItemDao() {
-        if (itemDao == null) {
-            itemDao = new ItemDaoImpl();
-        }
-        return itemDao;
+
+        return new ItemDaoJdbcImpl(connection);
     }
 
     public static OrderDao getOrderDao() {
