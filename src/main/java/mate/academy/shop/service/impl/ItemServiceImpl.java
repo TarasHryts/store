@@ -33,11 +33,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item delete(Item item) {
-        return itemDao.delete(item);
-    }
-
-    @Override
     public List<Item> getAll() {
 
         return itemDao.getAllItems();

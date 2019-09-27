@@ -33,7 +33,7 @@
                 <c:out value="${item.price}"/>
             </td>
             <td>
-                <a href="/store_war_exploded/servlet/deleteItemAdmin?item_id=${item.id}">Delete Item</a>
+                <a href="/storeDB_war_exploded/servlet/deleteItemAdmin?item_id=${item.id}">Delete Item</a>
             </td>
 
         </tr>
