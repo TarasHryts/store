@@ -3,6 +3,7 @@ package mate.academy.shop.service.impl;
 import java.util.List;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.anotation.Service;
+import mate.academy.shop.dao.BucketDao;
 import mate.academy.shop.dao.ItemDao;
 import mate.academy.shop.model.Item;
 import mate.academy.shop.service.ItemService;
@@ -11,6 +12,8 @@ import mate.academy.shop.service.ItemService;
 public class ItemServiceImpl implements ItemService {
     @Inject
     private static ItemDao itemDao;
+    @Inject
+    private static BucketDao bucketDao;
 
     @Override
     public Item create(Item item) {
@@ -40,6 +43,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> getItemForBucket(Long bucketId) {
-        return itemDao.getItemForBucket(bucketId);
+        return bucketDao.getItemForBucket(bucketId);
     }
 }

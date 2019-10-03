@@ -55,7 +55,7 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public Order getOrderByBucket(Long bucketId) {
-        return null;
+    public void addItemToOrder(Long itemId, Long orderId) {
+
     }
 }

@@ -49,29 +49,4 @@ public class ItemDaoImpl implements ItemDao {
     public List<Item> getAllItems() {
         return Storage.items;
     }
-
-    @Override
-    public void addItemToBucket(Long itemId, Long bucketId) {
-
-    }
-
-    @Override
-    public List<Item> getItemForBucket(Long bucketId) {
-        return null;
-    }
-
-    @Override
-    public void deleteAllItemsFromBucket(Long bucketId) {
-
-    }
-
-    @Override
-    public void deleteItemFromBucket(Long bucketId, Long itemId) {
-
-    }
-
-    @Override
-    public void addItemToOrder(Long itemId, Long orderId) {
-
-    }
 }

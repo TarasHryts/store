@@ -32,7 +32,6 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             try (ResultSet generatedKey = statement.getGeneratedKeys()) {
                 if (generatedKey.next()) {
                     Long orderId = generatedKey.getLong(1);
-                    addOrderForBucket(order.getUserId(), orderId);
                     addOrderForUser(order.getUserId(), orderId);
                     return get(orderId);
                 }
@@ -51,17 +50,6 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.warn("Can't add bucket for user with id=" + userId);
-        }
-    }
-
-    private void addOrderForBucket(Long bucketId, Long orderId) {
-        String query = "INSERT INTO buckets_orders (bucket_id, order_id) VALUES (?, ?);";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(1, bucketId);
-            statement.setLong(2, orderId);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            logger.warn("Can't add bucket for user with id=" + bucketId);
         }
     }
 
@@ -102,19 +90,16 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
         return list;
     }
 
-    public Order getOrderByBucket(Long bucketId) {
-        String query = "SELECT * FROM buckets_orders where bucket_id=?;";
+    @Override
+    public void addItemToOrder(Long itemId, Long orderId) {
+        String query = "INSERT INTO items_orders (item_id, order_id) VALUES (?, ?);";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(1, bucketId);
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                Long newOrderId = resultSet.getLong("order_id");
-                return get(newOrderId);
-            }
+            statement.setLong(1, itemId);
+            statement.setLong(2, orderId);
+            statement.executeUpdate();
         } catch (SQLException e) {
-            logger.warn("Can't find order for user with id=" + bucketId);
+            logger.warn("Can't add item to order with id=" + itemId);
         }
-        return null;
     }
 
     @Override

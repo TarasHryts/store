@@ -51,9 +51,9 @@ public class OrderServiceImpl implements OrderService {
         order.setId(orderDao.create(order).getId());
         Long bucketId = bucketDao.getBucketByUser(userId).getId();
         for (Item item : itemList) {
-            itemDao.addItemToOrder(item.getId(), order.getId());
+            orderDao.addItemToOrder(item.getId(), order.getId());
         }
-        itemDao.deleteAllItemsFromBucket(bucketId);
+        bucketDao.deleteAllItemsFromBucket(bucketId);
         return order;
     }
 

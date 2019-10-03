@@ -5,10 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import mate.academy.shop.anotation.Dao;
 import mate.academy.shop.dao.BucketDao;
 import mate.academy.shop.model.Bucket;
+import mate.academy.shop.model.Item;
 import org.apache.log4j.Logger;
 
 @Dao
@@ -69,6 +72,65 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
     }
 
     @Override
+    public void addItemToBucket(Long itemId, Long bucketId) {
+        String query = "INSERT INTO items_buckets (item_id, bucket_id) VALUES (?, ?);";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, itemId);
+            statement.setLong(2, bucketId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.warn("Can't add item to bucket with id=" + itemId);
+        }
+    }
+
+    @Override
+    public List<Item> getItemForBucket(Long bucketId) {
+        List<Item> list = new ArrayList<>();
+        String query = "SELECT items.item_id, items.name, items.price FROM items "
+                + "INNER JOIN items_buckets ON items.item_id = items_buckets.item_id "
+                + "WHERE items_buckets.bucket_id=?;";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, bucketId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Long itemId = resultSet.getLong("item_id");
+                String itemName = resultSet.getString("name");
+                Double itemPrice = resultSet.getDouble("price");
+                Item item = new Item(itemId);
+                item.setName(itemName);
+                item.setPrice(itemPrice);
+                list.add(item);
+            }
+        } catch (SQLException e) {
+            logger.warn("Can't find items for bucket with id=" + bucketId);
+        }
+        return list;
+    }
+
+    @Override
+    public void deleteAllItemsFromBucket(Long bucketId) {
+        String query = "DELETE FROM items_buckets WHERE bucket_id=?;";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, bucketId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.warn("Can't delete all items from bucket with id=" + bucketId);
+        }
+    }
+
+    @Override
+    public void deleteItemFromBucket(Long bucketId, Long itemId) {
+        String query = "DELETE FROM items_buckets WHERE bucket_id=? AND item_id=?;";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, bucketId);
+            statement.setLong(2, itemId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.warn("Can't delete all items from bucket with id=" + bucketId);
+        }
+    }
+
+    @Override
     public Bucket get(Long bucketId) {
         String query = "SELECT * FROM buckets where bucket_id=?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -80,6 +142,7 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
                 Bucket bucket = new Bucket();
                 bucket.setId(newBucketId);
                 bucket.setUserId(newUserId);
+                bucket.setItems(getItemForBucket(bucketId));
                 return bucket;
             }
         } catch (SQLException e) {

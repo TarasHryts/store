@@ -14,5 +14,5 @@ public interface OrderDao {
 
     Order delete(Long id);
 
-    Order getOrderByBucket(Long bucketId);
+    void addItemToOrder(Long itemId, Long orderId);
 }
