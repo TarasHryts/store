@@ -15,9 +15,9 @@ import org.apache.log4j.Logger;
 
 @Dao
 public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
-    private static final String ITEM_ID_CONST = "item_id";
-    private static final String ITEM_NAME_CONST = "name";
-    private static final String ITEM_PRICE_CONST = "price";
+    private static final String ITEM_ID_COLUMN = "item_id";
+    private static final String ITEM_NAME_COLUMN = "name";
+    private static final String ITEM_PRICE_COLUMN = "price";
 
     private static Logger logger = Logger.getLogger(ItemDaoJdbcImpl.class);
 
@@ -54,9 +54,9 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                long itemId = resultSet.getLong(ITEM_ID_CONST);
-                String name = resultSet.getString(ITEM_NAME_CONST);
-                double price = resultSet.getDouble(ITEM_PRICE_CONST);
+                long itemId = resultSet.getLong(ITEM_ID_COLUMN);
+                String name = resultSet.getString(ITEM_NAME_COLUMN);
+                double price = resultSet.getDouble(ITEM_PRICE_COLUMN);
                 Item item = new Item(itemId);
                 item.setName(name);
                 item.setPrice(price);
@@ -102,9 +102,9 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                long itemId = resultSet.getLong(ITEM_ID_CONST);
-                String name = resultSet.getString(ITEM_NAME_CONST);
-                double price = resultSet.getDouble(ITEM_PRICE_CONST);
+                long itemId = resultSet.getLong(ITEM_ID_COLUMN);
+                String name = resultSet.getString(ITEM_NAME_COLUMN);
+                double price = resultSet.getDouble(ITEM_PRICE_COLUMN);
                 Item item = new Item(itemId);
                 item.setName(name);
                 item.setPrice(price);

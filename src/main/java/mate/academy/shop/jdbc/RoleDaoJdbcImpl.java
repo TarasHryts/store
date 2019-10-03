@@ -14,8 +14,8 @@ import org.apache.log4j.Logger;
 
 @Dao
 public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
-    private static final String ROLE_ID_CONST = "role_id";
-    private static final String ROLE_NAME_CONST = "name";
+    private static final String ROLE_ID_COLUMN = "role_id";
+    private static final String ROLE_NAME_COLUMN = "name";
     private static Logger logger = Logger.getLogger(RoleDaoJdbcImpl.class);
 
     public RoleDaoJdbcImpl(Connection connection) {
@@ -43,8 +43,8 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Long roleId = resultSet.getLong(ROLE_ID_CONST);
-                String roleName = resultSet.getString(ROLE_NAME_CONST);
+                Long roleId = resultSet.getLong(ROLE_ID_COLUMN);
+                String roleName = resultSet.getString(ROLE_NAME_COLUMN);
                 Role role = Role.of(roleName);
                 role.setId(roleId);
                 return role;
@@ -89,7 +89,7 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Long roleId = resultSet.getLong(ROLE_ID_CONST);
+                Long roleId = resultSet.getLong(ROLE_ID_COLUMN);
                 roleSet.add(get(roleId));
             }
         } catch (SQLException e) {

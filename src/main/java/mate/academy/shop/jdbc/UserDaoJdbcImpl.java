@@ -1,5 +1,7 @@
 package mate.academy.shop.jdbc;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,12 +18,12 @@ import org.apache.log4j.Logger;
 
 @Dao
 public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
-    private static final String USER_ID_CONST = "user_id";
-    private static final String USER_NAME_CONST = "name";
-    private static final String USER_SURNAME_CONST = "surname";
-    private static final String USER_LOGIN_CONST = "login";
-    private static final String USER_PASSWORD_CONST = "password";
-    private static final String USER_TOKEN_CONST = "token";
+    private static final String USER_ID_COLUMN = "user_id";
+    private static final String USER_NAME_COLUMN = "name";
+    private static final String USER_SURNAME_COLUMN = "surname";
+    private static final String USER_LOGIN_COLUMN = "login";
+    private static final String USER_PASSWORD_COLUMN = "password";
+    private static final String USER_TOKEN_COLUMN = "token";
     private static Logger logger = Logger.getLogger(ItemDaoJdbcImpl.class);
 
     public UserDaoJdbcImpl(Connection connection) {
@@ -59,12 +61,12 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Long userId = resultSet.getLong(USER_ID_CONST);
-                String name = resultSet.getString(USER_NAME_CONST);
-                String surname = resultSet.getString(USER_SURNAME_CONST);
-                String login = resultSet.getString(USER_LOGIN_CONST);
-                String password = resultSet.getString(USER_PASSWORD_CONST);
-                String token = resultSet.getString(USER_TOKEN_CONST);
+                Long userId = resultSet.getLong(USER_ID_COLUMN);
+                String name = resultSet.getString(USER_NAME_COLUMN);
+                String surname = resultSet.getString(USER_SURNAME_COLUMN);
+                String login = resultSet.getString(USER_LOGIN_COLUMN);
+                String password = resultSet.getString(USER_PASSWORD_COLUMN);
+                String token = resultSet.getString(USER_TOKEN_COLUMN);
                 User user = new User(userId);
                 user.setName(name);
                 user.setSurname(surname);
@@ -116,12 +118,12 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
         try (PreparedStatement statement = connection.prepareStatement(query);) {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                long userId = resultSet.getLong(USER_ID_CONST);
-                String name = resultSet.getString(USER_NAME_CONST);
-                String surname = resultSet.getString(USER_SURNAME_CONST);
-                String login = resultSet.getString(USER_LOGIN_CONST);
-                String password = resultSet.getString(USER_PASSWORD_CONST);
-                String token = resultSet.getString(USER_TOKEN_CONST);
+                long userId = resultSet.getLong(USER_ID_COLUMN);
+                String name = resultSet.getString(USER_NAME_COLUMN);
+                String surname = resultSet.getString(USER_SURNAME_COLUMN);
+                String login = resultSet.getString(USER_LOGIN_COLUMN);
+                String password = resultSet.getString(USER_PASSWORD_COLUMN);
+                String token = resultSet.getString(USER_TOKEN_COLUMN);
                 User user = new User(userId);
                 user.setName(name);
                 user.setSurname(surname);
@@ -144,10 +146,10 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setString(2, password);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                long userId = resultSet.getLong(USER_ID_CONST);
-                String name = resultSet.getString(USER_NAME_CONST);
-                String surname = resultSet.getString(USER_SURNAME_CONST);
-                String token = resultSet.getString(USER_TOKEN_CONST);
+                long userId = resultSet.getLong(USER_ID_COLUMN);
+                String name = resultSet.getString(USER_NAME_COLUMN);
+                String surname = resultSet.getString(USER_SURNAME_COLUMN);
+                String token = resultSet.getString(USER_TOKEN_COLUMN);
                 User user = new User(userId);
                 user.setName(name);
                 user.setSurname(surname);
@@ -169,12 +171,12 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setString(1, token);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Long userId = resultSet.getLong(USER_ID_CONST);
-                String name = resultSet.getString(USER_NAME_CONST);
-                String surname = resultSet.getString(USER_SURNAME_CONST);
-                String login = resultSet.getString(USER_LOGIN_CONST);
-                String password = resultSet.getString(USER_PASSWORD_CONST);
-                String tokenUsers = resultSet.getString(USER_TOKEN_CONST);
+                Long userId = resultSet.getLong(USER_ID_COLUMN);
+                String name = resultSet.getString(USER_NAME_COLUMN);
+                String surname = resultSet.getString(USER_SURNAME_COLUMN);
+                String login = resultSet.getString(USER_LOGIN_COLUMN);
+                String password = resultSet.getString(USER_PASSWORD_COLUMN);
+                String tokenUsers = resultSet.getString(USER_TOKEN_COLUMN);
                 User user = new User(userId);
                 user.setName(name);
                 user.setSurname(surname);
@@ -187,5 +189,23 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             logger.warn("Can't get user with token=" + token);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public String hashPassword(String password) {
+        StringBuilder hashedPassword = new StringBuilder();
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-512 ");
+            byte[] digest = messageDigest.digest(password.getBytes());
+            for (byte b : digest) {
+                hashedPassword.append(String.format("%02x",b));
+            }
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+
+        return hashedPassword.toString();
     }
 }

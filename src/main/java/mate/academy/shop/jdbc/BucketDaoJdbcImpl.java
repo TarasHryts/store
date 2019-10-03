@@ -16,8 +16,8 @@ import org.apache.log4j.Logger;
 
 @Dao
 public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao {
-    private static final String BUCKET_ID_CONST = "bucket_id";
-    private static final String USER_ID_CONST = "user_id";
+    private static final String BUCKET_ID_COLUMN = "bucket_id";
+    private static final String USER_ID_COLUMN = "user_id";
     private static Logger logger = Logger.getLogger(ItemDaoJdbcImpl.class);
 
     public BucketDaoJdbcImpl(Connection connection) {
@@ -62,7 +62,7 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Long newBucketId = resultSet.getLong(BUCKET_ID_CONST);
+                Long newBucketId = resultSet.getLong(BUCKET_ID_COLUMN);
                 return get(newBucketId);
             }
         } catch (SQLException e) {
@@ -137,8 +137,8 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
             statement.setLong(1, bucketId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Long newBucketId = resultSet.getLong(BUCKET_ID_CONST);
-                Long newUserId = resultSet.getLong(USER_ID_CONST);
+                Long newBucketId = resultSet.getLong(BUCKET_ID_COLUMN);
+                Long newUserId = resultSet.getLong(USER_ID_COLUMN);
                 Bucket bucket = new Bucket();
                 bucket.setId(newBucketId);
                 bucket.setUserId(newUserId);

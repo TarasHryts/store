@@ -68,4 +68,9 @@ public class UserDaoImpl implements UserDao {
                 .filter(x -> x.getToken().equals(token))
                 .findFirst();
     }
+
+    @Override
+    public String hashPassword(String password) {
+        return null;
+    }
 }
