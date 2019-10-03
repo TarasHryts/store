@@ -13,7 +13,6 @@ public class Item {
         this.price = price;
     }
 
-
     public Item(Long id) {
         this.id = id;
     }

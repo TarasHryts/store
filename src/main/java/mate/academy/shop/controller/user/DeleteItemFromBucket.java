@@ -1,4 +1,4 @@
-package mate.academy.shop.controller.userControllers;
+package mate.academy.shop.controller.user;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,18 +9,16 @@ import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.model.Bucket;
 import mate.academy.shop.model.User;
 import mate.academy.shop.service.BucketService;
-import mate.academy.shop.service.ItemService;
 import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
-public class AddToBucketController extends HttpServlet {
-    private final static Logger logger = Logger.getLogger(AddToBucketController.class);
-    @Inject
-    private static BucketService bucketService;
+public class DeleteItemFromBucket extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(DeleteItemFromBucket.class);
+
     @Inject
     private static UserService userService;
     @Inject
-    private static ItemService itemService;
+    private static BucketService bucketService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -30,7 +28,7 @@ public class AddToBucketController extends HttpServlet {
         User user = userService.get(userId);
         Bucket bucket = bucketService.getBucketByUser(userId);
         String itemId = req.getParameter("item_id");
-        bucketService.addItem(bucket.getId(), Long.valueOf(itemId));
+        bucketService.deleteItem(bucket.getId(), Long.valueOf(itemId));
         resp.sendRedirect(req.getContextPath() + "/servlet/bucket");
     }
 }

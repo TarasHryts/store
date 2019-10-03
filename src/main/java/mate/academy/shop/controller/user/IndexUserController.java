@@ -1,4 +1,4 @@
-package mate.academy.shop.controller.userControllers;
+package mate.academy.shop.controller.user;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 public class IndexUserController extends HttpServlet {
-    private final static Logger logger = Logger.getLogger(IndexUserController.class);
+    private static final Logger logger = Logger.getLogger(IndexUserController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

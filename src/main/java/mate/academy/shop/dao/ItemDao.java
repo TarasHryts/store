@@ -14,7 +14,7 @@ public interface ItemDao {
 
     List<Item> getAllItems();
 
-    void addItemToBucket(Long item_id, Long bucket_id);
+    void addItemToBucket(Long itemId, Long bucketId);
 
     List<Item> getItemForBucket(Long bucketId);
 
@@ -22,5 +22,5 @@ public interface ItemDao {
 
     void deleteItemFromBucket(Long bucketId, Long itemId);
 
-    void addItemToOrder(Long item_id, Long order_id);
+    void addItemToOrder(Long itemId, Long orderId);
 }

@@ -47,7 +47,7 @@ public class BucketDaoImpl implements BucketDao {
     }
 
     @Override
-    public void addBucketForUser(Long user_id, Long bucket_id) {
+    public void addBucketForUser(Long userId, Long bucketId) {
 
     }
 

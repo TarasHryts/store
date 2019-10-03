@@ -30,14 +30,13 @@ public class Factory {
     static {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/newdatabase?" +
-                    "user=root&password=729313&serverTimezone=UTC");
+            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/newdatabase?"
+                    + "user=root&password=729313&serverTimezone=UTC");
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
             logger.error("Can't establish connection to our DB", e);
         }
     }
-
 
     private static BucketDao bucketDao;
     private static ItemDao itemDao;

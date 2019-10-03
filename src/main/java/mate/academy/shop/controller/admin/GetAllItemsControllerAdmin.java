@@ -1,4 +1,4 @@
-package mate.academy.shop.controller.userControllers;
+package mate.academy.shop.controller.admin;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,8 +12,8 @@ import mate.academy.shop.service.BucketService;
 import mate.academy.shop.service.ItemService;
 import org.apache.log4j.Logger;
 
-public class GetAllItemsController extends HttpServlet {
-    private final static Logger logger = Logger.getLogger(GetAllItemsController.class);
+public class GetAllItemsControllerAdmin extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(GetAllItemsControllerAdmin.class);
     @Inject
     private static ItemService itemService;
     @Inject
@@ -25,6 +25,6 @@ public class GetAllItemsController extends HttpServlet {
         logger.info(this.getClass().getName() + " start working");
         List<Item> items = itemService.getAll();
         req.setAttribute("items", items);
-        req.getRequestDispatcher("/WEB-INF/views/allItems.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/allItemsAdmin.jsp").forward(req, resp);
     }
 }

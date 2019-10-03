@@ -14,7 +14,6 @@ public class User {
     private Bucket bucket;
     private Set<Role> roles = new HashSet<>();
 
-
     public User(String name, Bucket bucket) {
         this.name = name;
         this.bucket = bucket;

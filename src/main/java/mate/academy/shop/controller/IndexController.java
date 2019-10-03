@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 public class IndexController extends HttpServlet {
     @Inject
     private static ItemService itemService;
-    private final static Logger logger = Logger.getLogger(IndexController.class);
+    private static final Logger logger = Logger.getLogger(IndexController.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

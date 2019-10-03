@@ -1,4 +1,4 @@
-package mate.academy.shop.controller.adminControllers;
+package mate.academy.shop.controller.admin;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -11,7 +11,7 @@ import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class DeleteItemAdmin extends HttpServlet {
-    private final static Logger logger = Logger.getLogger(DeleteItemAdmin.class);
+    private static final Logger logger = Logger.getLogger(DeleteItemAdmin.class);
 
     @Inject
     private static UserService userService;

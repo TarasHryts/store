@@ -51,7 +51,7 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public void addItemToBucket(Long item_id, Long bucket_id) {
+    public void addItemToBucket(Long itemId, Long bucketId) {
 
     }
 
@@ -71,7 +71,7 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public void addItemToOrder(Long item_id, Long order_id) {
+    public void addItemToOrder(Long itemId, Long orderId) {
 
     }
 }

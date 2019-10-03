@@ -23,7 +23,6 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
         Locale.setDefault(Locale.US);
     }
 
-
     @Override
     public Role create(Role role) {
         String query = "INSERT INTO roles (name) VALUES (?);";

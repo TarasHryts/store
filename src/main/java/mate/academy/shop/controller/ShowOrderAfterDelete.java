@@ -15,7 +15,7 @@ import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class ShowOrderAfterDelete extends HttpServlet {
-    private final static Logger logger = Logger.getLogger(ShowOrderAfterDelete.class);
+    private static final Logger logger = Logger.getLogger(ShowOrderAfterDelete.class);
     @Inject
     private static OrderService orderService;
     @Inject

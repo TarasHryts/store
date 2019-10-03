@@ -1,4 +1,4 @@
-package mate.academy.shop.controller.userControllers;
+package mate.academy.shop.controller.user;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,8 +13,9 @@ import mate.academy.shop.service.OrderService;
 import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
-public class DeleteOrderController extends HttpServlet {
-    private final static Logger logger = Logger.getLogger(DeleteOrderController.class);
+public class GetAllOrdersController extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(GetAllOrdersController.class);
+
     @Inject
     private static OrderService orderService;
     @Inject
@@ -25,9 +26,6 @@ public class DeleteOrderController extends HttpServlet {
             throws ServletException, IOException {
         logger.info(this.getClass().getName() + " start working");
         Long userId = (Long) req.getSession(true).getAttribute("userId");
-        List<Order> ordersTest = orderService.getAllOrdersForUser(userId);
-        String orderId = req.getParameter("order_id");
-        orderService.delete(Long.valueOf(orderId));
         List<Order> orders = orderService.getAllOrdersForUser(userId);
         User user = userService.get(userId);
         req.setAttribute("orders", orders);

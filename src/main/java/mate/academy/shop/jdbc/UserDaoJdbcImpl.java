@@ -30,8 +30,8 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public User create(User user) {
-        String query = "INSERT INTO users (name, surname, login, password, token) " +
-                "VALUES (?, ?, ?, ?, ?);";
+        String query = "INSERT INTO users (name, surname, login, password, token) "
+                + "VALUES (?, ?, ?, ?, ?);";
         try (PreparedStatement statement = connection
                 .prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, user.getName());
@@ -81,16 +81,15 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public User update(User user) {
-        String query = "UPDATE users SET user_id=?, name=?, " +
-                "surname=?, login=?, password=?, token=? WHERE user_id=?;";
+        String query = "UPDATE users SET name=?, surname=?, login=?, password=?, token=? "
+                + "WHERE user_id=?;";
         try (PreparedStatement statement = connection.prepareStatement(query);) {
-            statement.setLong(1, user.getId());
-            statement.setString(2, user.getName());
-            statement.setString(3, user.getSurname());
-            statement.setString(4, user.getLogin());
-            statement.setString(5, user.getPassword());
-            statement.setString(6, user.getToken());
-            statement.setLong(7, user.getId());
+            statement.setString(1, user.getName());
+            statement.setString(2, user.getSurname());
+            statement.setString(3, user.getLogin());
+            statement.setString(4, user.getPassword());
+            statement.setString(5, user.getToken());
+            statement.setLong(6, user.getId());
             statement.executeUpdate();
             return user;
         } catch (SQLException e) {

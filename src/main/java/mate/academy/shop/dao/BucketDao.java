@@ -11,7 +11,7 @@ public interface BucketDao {
 
     Bucket delete(Long id);
 
-    void addBucketForUser(Long user_id, Long bucket_id);
+    void addBucketForUser(Long userId, Long bucketId);
 
     Bucket getBucketByUser(Long userId);
 }

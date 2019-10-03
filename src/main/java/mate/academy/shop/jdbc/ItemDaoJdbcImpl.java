@@ -44,7 +44,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
         } catch (SQLException e) {
             logger.warn("Can't create the item with name=" + item.getName());
         }
-        return item;
+        return null;
     }
 
     @Override
@@ -153,25 +153,25 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
         }
     }
 
-    public void addItemToBucket(Long item_id, Long bucket_id) {
+    public void addItemToBucket(Long itemId, Long bucketId) {
         String query = "INSERT INTO items_buckets (item_id, bucket_id) VALUES (?, ?);";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(1, item_id);
-            statement.setLong(2, bucket_id);
+            statement.setLong(1, itemId);
+            statement.setLong(2, bucketId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.warn("Can't add item to bucket with id=" + item_id);
+            logger.warn("Can't add item to bucket with id=" + itemId);
         }
     }
 
-    public void addItemToOrder(Long item_id, Long order_id) {
+    public void addItemToOrder(Long itemId, Long orderId) {
         String query = "INSERT INTO items_orders (item_id, order_id) VALUES (?, ?);";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setLong(1, item_id);
-            statement.setLong(2, order_id);
+            statement.setLong(1, itemId);
+            statement.setLong(2, orderId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.warn("Can't add item to order with id=" + item_id);
+            logger.warn("Can't add item to order with id=" + itemId);
         }
     }
 }
