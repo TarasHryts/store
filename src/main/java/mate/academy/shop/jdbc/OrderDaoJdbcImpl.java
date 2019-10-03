@@ -37,7 +37,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
                 }
             }
         } catch (SQLException e) {
-            logger.warn("Can't create the order for user with id=" + order.getUserId());
+            logger.error("Can't create the order for user with id=" + order.getUserId());
         }
         return null;
     }
@@ -49,7 +49,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             statement.setLong(2, orderId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.warn("Can't add bucket for user with id=" + userId);
+            logger.error("Can't add bucket for user with id=" + userId);
         }
     }
 
@@ -68,7 +68,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
                 return order;
             }
         } catch (SQLException e) {
-            logger.warn("Can't get order by id=" + orderId);
+            logger.error("Can't get order by id=" + orderId);
         }
         return null;
     }
@@ -85,7 +85,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
                 list.add(get(newOrderId));
             }
         } catch (SQLException e) {
-            logger.warn("Can't find order for user with id=" + userId);
+            logger.error("Can't find order for user with id=" + userId);
         }
         return list;
     }
@@ -98,7 +98,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             statement.setLong(2, orderId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.warn("Can't add item to order with id=" + itemId);
+            logger.error("Can't add item to order with id=" + itemId);
         }
     }
 
@@ -112,7 +112,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             statement.executeUpdate();
             return order;
         } catch (SQLException e) {
-            logger.warn("Can't update the order with id=" + order.getId());
+            logger.error("Can't update the order with id=" + order.getId());
         }
         return null;
     }
@@ -126,7 +126,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             statement.executeUpdate();
             return order;
         } catch (SQLException e) {
-            logger.warn("Can't delete the order with id=" + id);
+            logger.error("Can't delete the order with id=" + id);
         }
         return null;
     }

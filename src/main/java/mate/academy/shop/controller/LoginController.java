@@ -37,7 +37,8 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         logger.info(this.getClass().getName() + " start working");
         String login = req.getParameter("login");
-        String password = req.getParameter("psw");
+        String password = userService.hashPassword(req.getParameter("psw"),
+                userService.getByLogin(login).get().getSalt().getBytes());
         try {
             User user = userService.login(login, password);
             Cookie cookie = new Cookie("MATE", user.getToken());

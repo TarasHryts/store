@@ -31,7 +31,7 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
             statement.executeUpdate();
             return role;
         } catch (SQLException e) {
-            logger.warn("Cat't create the role with name=" + role.getRoleName());
+            logger.error("Cat't create the role with name=" + role.getRoleName());
         }
         return null;
     }
@@ -50,7 +50,7 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
                 return role;
             }
         } catch (SQLException e) {
-            logger.warn("Cat't get role by id=" + id);
+            logger.error("Cat't get role by id=" + id);
         }
         return null;
     }
@@ -65,7 +65,7 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
             statement.executeUpdate();
             return role;
         } catch (SQLException e) {
-            logger.warn("Can't update the role with id=" + role.getId());
+            logger.error("Can't update the role with id=" + role.getId());
         }
         return null;
     }
@@ -77,7 +77,7 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
             statement.setLong(1, role.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.warn("Can't delete the role with id=" + role.getId());
+            logger.error("Can't delete the role with id=" + role.getId());
         }
     }
 
@@ -93,7 +93,7 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
                 roleSet.add(get(roleId));
             }
         } catch (SQLException e) {
-            logger.warn("Can't find roles for user with id=" + userId);
+            logger.error("Can't find roles for user with id=" + userId);
         }
         return roleSet;
     }
@@ -106,7 +106,7 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
             statement.setLong(2, roleId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.warn("Can't find user with id=" + userId);
+            logger.error("Can't find user with id=" + userId);
         }
     }
 
@@ -118,7 +118,7 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
             statement.setLong(2, roleId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.warn("Can't delete role with id=" + roleId);
+            logger.error("Can't delete role with id=" + roleId);
         }
     }
 }

@@ -22,4 +22,8 @@ public interface UserService {
     User login(String login, String password) throws AuthenticationException;
 
     Optional<User> getByToken(String token);
+
+    String hashPassword(String password, byte[] salt);
+
+    Optional<User> getByLogin(String login);
 }

@@ -1,7 +1,5 @@
 package mate.academy.shop.jdbc;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,6 +22,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     private static final String USER_LOGIN_COLUMN = "login";
     private static final String USER_PASSWORD_COLUMN = "password";
     private static final String USER_TOKEN_COLUMN = "token";
+    private static final String USER_SALT_COLUMN = "salt";
     private static Logger logger = Logger.getLogger(ItemDaoJdbcImpl.class);
 
     public UserDaoJdbcImpl(Connection connection) {
@@ -32,8 +31,8 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public User create(User user) {
-        String query = "INSERT INTO users (name, surname, login, password, token) "
-                + "VALUES (?, ?, ?, ?, ?);";
+        String query = "INSERT INTO users (name, surname, login, password, token, salt) "
+                + "VALUES (?, ?, ?, ?, ?, ?);";
         try (PreparedStatement statement = connection
                 .prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, user.getName());
@@ -41,6 +40,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setString(3, user.getLogin());
             statement.setString(4, user.getPassword());
             statement.setString(5, user.getToken());
+            statement.setString(6, user.getSalt());
             statement.executeUpdate();
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -49,7 +49,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            logger.warn("Can't create the user with name=" + user.getName());
+            logger.error("Can't create the user with name=" + user.getName());
         }
         return null;
     }
@@ -67,23 +67,25 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 String login = resultSet.getString(USER_LOGIN_COLUMN);
                 String password = resultSet.getString(USER_PASSWORD_COLUMN);
                 String token = resultSet.getString(USER_TOKEN_COLUMN);
+                String salt = resultSet.getString(USER_SALT_COLUMN);
                 User user = new User(userId);
                 user.setName(name);
                 user.setSurname(surname);
                 user.setLogin(login);
                 user.setPassword(password);
                 user.setToken(token);
+                user.setSalt(salt);
                 return user;
             }
         } catch (SQLException e) {
-            logger.warn("Can't get user by id=" + id);
+            logger.error("Can't get user by id=" + id);
         }
         return null;
     }
 
     @Override
     public User update(User user) {
-        String query = "UPDATE users SET name=?, surname=?, login=?, password=?, token=? "
+        String query = "UPDATE users SET name=?, surname=?, login=?, password=?, token=?, salt=? "
                 + "WHERE user_id=?;";
         try (PreparedStatement statement = connection.prepareStatement(query);) {
             statement.setString(1, user.getName());
@@ -91,11 +93,12 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setString(3, user.getLogin());
             statement.setString(4, user.getPassword());
             statement.setString(5, user.getToken());
-            statement.setLong(6, user.getId());
+            statement.setString(6, user.getSalt());
+            statement.setLong(7, user.getId());
             statement.executeUpdate();
             return user;
         } catch (SQLException e) {
-            logger.warn("Can't update the user with id=" + user.getId());
+            logger.error("Can't update the user with id=" + user.getId());
         }
         return null;
     }
@@ -107,7 +110,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.warn("Can't delete the user with id=" + id);
+            logger.error("Can't delete the user with id=" + id);
         }
     }
 
@@ -124,16 +127,18 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 String login = resultSet.getString(USER_LOGIN_COLUMN);
                 String password = resultSet.getString(USER_PASSWORD_COLUMN);
                 String token = resultSet.getString(USER_TOKEN_COLUMN);
+                String salt = resultSet.getString(USER_SALT_COLUMN);
                 User user = new User(userId);
                 user.setName(name);
                 user.setSurname(surname);
                 user.setLogin(login);
                 user.setPassword(password);
                 user.setToken(token);
+                user.setSalt(salt);
                 list.add(user);
             }
         } catch (SQLException e) {
-            logger.warn("Can't get users");
+            logger.error("Can't get users");
         }
         return list;
     }
@@ -159,7 +164,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 return user;
             }
         } catch (SQLException e) {
-            logger.warn("Incorrect username or password");
+            logger.error("Incorrect username or password");
         }
         return null;
     }
@@ -177,35 +182,48 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 String login = resultSet.getString(USER_LOGIN_COLUMN);
                 String password = resultSet.getString(USER_PASSWORD_COLUMN);
                 String tokenUsers = resultSet.getString(USER_TOKEN_COLUMN);
+                String salt = resultSet.getString(USER_SALT_COLUMN);
                 User user = new User(userId);
                 user.setName(name);
                 user.setSurname(surname);
                 user.setLogin(login);
                 user.setPassword(password);
                 user.setToken(tokenUsers);
+                user.setSalt(salt);
                 return Optional.of(user);
             }
         } catch (SQLException e) {
-            logger.warn("Can't get user with token=" + token);
+            logger.error("Can't get user with token=" + token);
         }
         return Optional.empty();
     }
 
     @Override
-    public String hashPassword(String password) {
-        StringBuilder hashedPassword = new StringBuilder();
-        try {
-            MessageDigest messageDigest = MessageDigest.getInstance("SHA-512 ");
-            byte[] digest = messageDigest.digest(password.getBytes());
-            for (byte b : digest) {
-                hashedPassword.append(String.format("%02x",b));
+    public Optional<User> getByLogin(String login) {
+        String query = "SELECT * FROM users WHERE login=?;";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                Long userId = resultSet.getLong(USER_ID_COLUMN);
+                String name = resultSet.getString(USER_NAME_COLUMN);
+                String surname = resultSet.getString(USER_SURNAME_COLUMN);
+                String newLogin = resultSet.getString(USER_LOGIN_COLUMN);
+                String password = resultSet.getString(USER_PASSWORD_COLUMN);
+                String tokenUsers = resultSet.getString(USER_TOKEN_COLUMN);
+                String salt = resultSet.getString(USER_SALT_COLUMN);
+                User user = new User(userId);
+                user.setName(name);
+                user.setSurname(surname);
+                user.setLogin(newLogin);
+                user.setPassword(password);
+                user.setToken(tokenUsers);
+                user.setSalt(salt);
+                return Optional.of(user);
             }
-
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            logger.error("Can't get user with token=" + login);
         }
-
-
-        return hashedPassword.toString();
+        return Optional.empty();
     }
 }

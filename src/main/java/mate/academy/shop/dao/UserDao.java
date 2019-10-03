@@ -20,5 +20,5 @@ public interface UserDao {
 
     Optional<User> getByToken(String token);
 
-    String hashPassword(String password);
+    Optional<User> getByLogin(String login);
 }

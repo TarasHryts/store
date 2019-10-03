@@ -70,7 +70,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public String hashPassword(String password) {
-        return null;
+    public Optional<User> getByLogin(String login) {
+        return Optional.empty();
     }
 }

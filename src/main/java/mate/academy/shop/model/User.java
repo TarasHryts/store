@@ -1,5 +1,6 @@
 package mate.academy.shop.model;
 
+import java.security.SecureRandom;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,7 +11,7 @@ public class User {
     private String surname;
     private String login;
     private String password;
-    private String token;
+    private String salt;
     private Bucket bucket;
     private Set<Role> roles = new HashSet<>();
 
@@ -20,7 +21,25 @@ public class User {
     }
 
     public User() {
+        this.salt = getRandomSalt().toString();
     }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    private byte[] getRandomSalt() {
+        SecureRandom random = new SecureRandom();
+        byte[] salt = new byte[16];
+        random.nextBytes(salt);
+        return salt;
+    }
+
+    private String token;
 
     public User(Long id) {
         this.id = id;
