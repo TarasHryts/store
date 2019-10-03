@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import mate.academy.shop.anotation.Inject;
+import mate.academy.shop.dao.RoleDao;
 import mate.academy.shop.exceptions.AuthenticationException;
 import mate.academy.shop.model.Role;
 import mate.academy.shop.model.User;
@@ -21,6 +22,8 @@ public class LoginController extends HttpServlet {
     private final static Logger logger = Logger.getLogger(LoginController.class);
     @Inject
     private static UserService userService;
+    @Inject
+    private static RoleDao roleDao;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -54,7 +57,7 @@ public class LoginController extends HttpServlet {
     }
 
     private boolean verifyRole(User user, Role.RoleName roleName) {
-        return user.getRoles().stream()
-                .anyMatch(x -> x.getRoleName().equals(roleName));
+        return roleDao.getAllRoleForUser(user.getId())
+                .stream().anyMatch(x -> x.getRoleName().equals(roleName));
     }
 }

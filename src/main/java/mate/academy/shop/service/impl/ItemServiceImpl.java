@@ -28,13 +28,18 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item delete(Long id) {
-        return itemDao.delete(id);
+    public void delete(Long id) {
+        itemDao.delete(id);
     }
 
     @Override
     public List<Item> getAll() {
 
         return itemDao.getAllItems();
+    }
+
+    @Override
+    public List<Item> getItemForBucket(Long bucketId) {
+        return itemDao.getItemForBucket(bucketId);
     }
 }

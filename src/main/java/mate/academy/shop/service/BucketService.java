@@ -20,4 +20,6 @@ public interface BucketService {
     Bucket clear(Long bucketId);
 
     Bucket deleteItem(Long bucketId, Long itemId);
+
+    Bucket getBucketByUser(Long userId);
 }

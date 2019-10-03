@@ -53,4 +53,9 @@ public class OrderDaoImpl implements OrderDao {
         Storage.orders.removeIf(x -> id.equals(x.getId()));
         return order;
     }
+
+    @Override
+    public Order getOrderByBucket(Long bucketId) {
+        return null;
+    }
 }

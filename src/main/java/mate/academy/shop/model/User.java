@@ -1,32 +1,35 @@
 package mate.academy.shop.model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import mate.academy.shop.factory.generators.UserIdGenerator;
 
 public class User {
-    private final Long id;
+    private Long id;
     private String name;
     private String surname;
     private String login;
     private String password;
     private String token;
     private Bucket bucket;
+    private Set<Role> roles = new HashSet<>();
+
 
     public User(String name, Bucket bucket) {
-        this();
         this.name = name;
         this.bucket = bucket;
     }
 
     public User() {
-        this.id = UserIdGenerator.getIdGenerator();
-        this.orders = new ArrayList<Order>();
     }
 
-    private Set<Role> roles = new HashSet<>();
+    public User(Long id) {
+        this.id = id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Set<Role> getRoles() {
         return roles;

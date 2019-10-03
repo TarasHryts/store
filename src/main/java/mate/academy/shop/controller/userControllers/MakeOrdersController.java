@@ -28,7 +28,7 @@ public class MakeOrdersController extends HttpServlet {
             throws ServletException, IOException {
         logger.info(this.getClass().getName() + " start working");
         Long userId = (Long) req.getSession(true).getAttribute("userId");
-        Long bucketId = userService.get(userId).getBucket().getId();
+        Long bucketId = bucketService.getBucketByUser(userId).getId();
         List<Item> items = bucketService.getAllItems(bucketId);
         Order order = orderService.completeOrder(items, userId);
         bucketService.getAllItems(bucketId).clear();

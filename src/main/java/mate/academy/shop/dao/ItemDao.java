@@ -10,7 +10,17 @@ public interface ItemDao {
 
     Item update(Item item);
 
-    Item delete(Long id);
+    void delete(Long id);
 
     List<Item> getAllItems();
+
+    void addItemToBucket(Long item_id, Long bucket_id);
+
+    List<Item> getItemForBucket(Long bucketId);
+
+    void deleteAllItemsFromBucket(Long bucketId);
+
+    void deleteItemFromBucket(Long bucketId, Long itemId);
+
+    void addItemToOrder(Long item_id, Long order_id);
 }

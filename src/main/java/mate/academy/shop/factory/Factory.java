@@ -6,11 +6,13 @@ import java.sql.SQLException;
 import mate.academy.shop.dao.BucketDao;
 import mate.academy.shop.dao.ItemDao;
 import mate.academy.shop.dao.OrderDao;
+import mate.academy.shop.dao.RoleDao;
 import mate.academy.shop.dao.UserDao;
-import mate.academy.shop.dao.impl.BucketDaoImpl;
-import mate.academy.shop.dao.impl.OrderDaoImpl;
-import mate.academy.shop.dao.impl.UserDaoImpl;
+import mate.academy.shop.jdbc.BucketDaoJdbcImpl;
 import mate.academy.shop.jdbc.ItemDaoJdbcImpl;
+import mate.academy.shop.jdbc.OrderDaoJdbcImpl;
+import mate.academy.shop.jdbc.RoleDaoJdbcImpl;
+import mate.academy.shop.jdbc.UserDaoJdbcImpl;
 import mate.academy.shop.service.BucketService;
 import mate.academy.shop.service.ItemService;
 import mate.academy.shop.service.OrderService;
@@ -24,6 +26,7 @@ import org.apache.log4j.Logger;
 public class Factory {
     private static Logger logger = Logger.getLogger(Factory.class);
     private static Connection connection;
+
     static {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -40,34 +43,44 @@ public class Factory {
     private static ItemDao itemDao;
     private static OrderDao orderDao;
     private static UserDao userDao;
+    private static RoleDao roleDao;
 
     private static BucketService bucketService;
     private static ItemService itemService;
     private static OrderService orderService;
     private static UserService userService;
 
+    public static RoleDao getRoleDao() {
+        if (roleDao == null) {
+            roleDao = new RoleDaoJdbcImpl(connection);
+        }
+        return roleDao;
+    }
+
     public static BucketDao getBucketDao() {
         if (bucketDao == null) {
-            bucketDao = new BucketDaoImpl();
+            bucketDao = new BucketDaoJdbcImpl(connection);
         }
         return bucketDao;
     }
 
     public static ItemDao getItemDao() {
-
-        return new ItemDaoJdbcImpl(connection);
+        if (itemDao == null) {
+            itemDao = new ItemDaoJdbcImpl(connection);
+        }
+        return itemDao;
     }
 
     public static OrderDao getOrderDao() {
         if (orderDao == null) {
-            orderDao = new OrderDaoImpl();
+            orderDao = new OrderDaoJdbcImpl(connection);
         }
         return orderDao;
     }
 
     public static UserDao getUserDao() {
         if (userDao == null) {
-            userDao = new UserDaoImpl();
+            userDao = new UserDaoJdbcImpl(connection);
         }
         return userDao;
     }

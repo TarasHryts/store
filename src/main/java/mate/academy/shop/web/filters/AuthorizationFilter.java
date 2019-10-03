@@ -17,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mate.academy.shop.anotation.Inject;
+import mate.academy.shop.dao.RoleDao;
 import mate.academy.shop.model.Role;
 import mate.academy.shop.model.User;
 import mate.academy.shop.service.UserService;
@@ -25,6 +26,8 @@ public class AuthorizationFilter implements Filter {
     public static final String EMPTY_STRING = "";
     @Inject
     private static UserService userService;
+    @Inject
+    private static RoleDao roleDao;
     private Map<String, Role.RoleName> protectedUrls = new HashMap<>();
 
     @Override
@@ -87,8 +90,8 @@ public class AuthorizationFilter implements Filter {
     }
 
     private boolean verifyRole(User user, Role.RoleName roleName) {
-        return user.getRoles().stream()
-                .anyMatch(x -> x.getRoleName().equals(roleName));
+        return roleDao.getAllRoleForUser(user.getId())
+                .stream().anyMatch(x -> x.getRoleName().equals(roleName));
     }
 
     private void processDenied(HttpServletRequest req, HttpServletResponse resp)

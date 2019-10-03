@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.UUID;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.anotation.Service;
+import mate.academy.shop.dao.RoleDao;
 import mate.academy.shop.dao.UserDao;
 import mate.academy.shop.exceptions.AuthenticationException;
 import mate.academy.shop.model.Order;
@@ -13,8 +14,11 @@ import mate.academy.shop.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private static final Long DEFAULT_ROLE = 58L;
     @Inject
     private static UserDao userDao;
+    @Inject
+    private static RoleDao roleDao;
 
     private String getToken() {
         return UUID.randomUUID().toString();
@@ -23,7 +27,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User create(User user) {
         user.setToken(getToken());
-        return userDao.create(user);
+        User newUser = userDao.create(user);
+        roleDao.setRoleForUser(DEFAULT_ROLE, newUser.getId());
+        newUser.setRoles(roleDao.getAllRoleForUser(newUser.getId()));
+        return newUser;
     }
 
     @Override
@@ -42,8 +49,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User delete(Long id) {
-        return userDao.delete(id);
+    public void delete(Long id) {
+        userDao.delete(id);
     }
 
     @Override

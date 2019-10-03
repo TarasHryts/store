@@ -10,4 +10,8 @@ public interface BucketDao {
     Bucket update(Bucket bucket);
 
     Bucket delete(Long id);
+
+    void addBucketForUser(Long user_id, Long bucket_id);
+
+    Bucket getBucketByUser(Long userId);
 }

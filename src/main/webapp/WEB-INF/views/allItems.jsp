@@ -33,7 +33,7 @@
                 <c:out value="${item.price}"/>
             </td>
             <td>
-                <a href="/storeDB_war_exploded/servlet/addToBucket?item_id=${item.id}">Add To Bucket</a>
+                <a href="/shop_war_exploded/servlet/addToBucket?item_id=${item.id}">Add To Bucket</a>
             </td>
 
         </tr>

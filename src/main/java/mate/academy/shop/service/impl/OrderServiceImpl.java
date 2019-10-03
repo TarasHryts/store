@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.anotation.Service;
+import mate.academy.shop.dao.BucketDao;
+import mate.academy.shop.dao.ItemDao;
 import mate.academy.shop.dao.OrderDao;
 import mate.academy.shop.dao.UserDao;
 import mate.academy.shop.model.Item;
@@ -16,6 +18,10 @@ public class OrderServiceImpl implements OrderService {
     private static OrderDao orderDao;
     @Inject
     private static UserDao userDao;
+    @Inject
+    private static ItemDao itemDao;
+    @Inject
+    private static BucketDao bucketDao;
 
     @Override
     public Order create(Order order) {
@@ -40,9 +46,14 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order completeOrder(List<Item> items, Long userId) {
         List<Item> itemList = new ArrayList<>(items);
-        Order order = new Order(userId, items);
-        orderDao.create(order);
-        userDao.get(userId).getOrders().add(order);
+        Order order = new Order();
+        order.setUserId(userId);
+        order.setId(orderDao.create(order).getId());
+        Long bucketId = bucketDao.getBucketByUser(userId).getId();
+        for (Item item : itemList) {
+            itemDao.addItemToOrder(item.getId(), order.getId());
+        }
+        itemDao.deleteAllItemsFromBucket(bucketId);
         return order;
     }
 
@@ -50,7 +61,6 @@ public class OrderServiceImpl implements OrderService {
     public Order delete(Long id) {
         Order order = get(id);
         orderDao.delete(id);
-        userDao.get(order.getUserId()).getOrders().remove(order);
         return order;
     }
 }

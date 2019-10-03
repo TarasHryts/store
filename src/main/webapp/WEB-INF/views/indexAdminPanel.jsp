@@ -12,8 +12,8 @@
 </head>
 <body>
 <H1>ADMIN MENU</H1>
-<a href="/storeDB_war_exploded/logout"><br/>Logout</a>
-<a href="/storeDB_war_exploded/allItemsAdmin"><br/>List Of Item</a>
-<a href="/storeDB_war_exploded/servlet/getAllUsers"><br/>List Of Users</a>
+<a href="/shop_war_exploded/logout"><br/>Logout</a>
+<a href="/shop_war_exploded/allItemsAdmin"><br/>List Of Item</a>
+<a href="/shop_war_exploded/servlet/getAllUsers"><br/>List Of Users</a>
 </body>
 </html>

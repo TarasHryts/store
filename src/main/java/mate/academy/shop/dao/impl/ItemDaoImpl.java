@@ -40,14 +40,38 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public Item delete(Long id) {
+    public void delete(Long id) {
         Item item = get(id);
         Storage.items.removeIf(x -> x.getId().equals(id));
-        return item;
     }
 
     @Override
     public List<Item> getAllItems() {
         return Storage.items;
+    }
+
+    @Override
+    public void addItemToBucket(Long item_id, Long bucket_id) {
+
+    }
+
+    @Override
+    public List<Item> getItemForBucket(Long bucketId) {
+        return null;
+    }
+
+    @Override
+    public void deleteAllItemsFromBucket(Long bucketId) {
+
+    }
+
+    @Override
+    public void deleteItemFromBucket(Long bucketId, Long itemId) {
+
+    }
+
+    @Override
+    public void addItemToOrder(Long item_id, Long order_id) {
+
     }
 }
