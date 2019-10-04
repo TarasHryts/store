@@ -61,21 +61,13 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Long userId = resultSet.getLong(USER_ID_COLUMN);
-                String name = resultSet.getString(USER_NAME_COLUMN);
-                String surname = resultSet.getString(USER_SURNAME_COLUMN);
-                String login = resultSet.getString(USER_LOGIN_COLUMN);
-                String password = resultSet.getString(USER_PASSWORD_COLUMN);
-                String token = resultSet.getString(USER_TOKEN_COLUMN);
-                String salt = resultSet.getString(USER_SALT_COLUMN);
-                User user = new User(userId);
-                user.setName(name);
-                user.setSurname(surname);
-                user.setLogin(login);
-                user.setPassword(password);
-                user.setToken(token);
-                user.setSalt(salt);
-                return user;
+                return new User(resultSet.getLong(USER_ID_COLUMN),
+                        resultSet.getString(USER_NAME_COLUMN),
+                        resultSet.getString(USER_SURNAME_COLUMN),
+                        resultSet.getString(USER_LOGIN_COLUMN),
+                        resultSet.getString(USER_PASSWORD_COLUMN),
+                        resultSet.getString(USER_SALT_COLUMN),
+                        resultSet.getString(USER_TOKEN_COLUMN));
             }
         } catch (SQLException e) {
             logger.error("Can't get user by id=" + id);
@@ -121,21 +113,13 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
         try (PreparedStatement statement = connection.prepareStatement(query);) {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
-                long userId = resultSet.getLong(USER_ID_COLUMN);
-                String name = resultSet.getString(USER_NAME_COLUMN);
-                String surname = resultSet.getString(USER_SURNAME_COLUMN);
-                String login = resultSet.getString(USER_LOGIN_COLUMN);
-                String password = resultSet.getString(USER_PASSWORD_COLUMN);
-                String token = resultSet.getString(USER_TOKEN_COLUMN);
-                String salt = resultSet.getString(USER_SALT_COLUMN);
-                User user = new User(userId);
-                user.setName(name);
-                user.setSurname(surname);
-                user.setLogin(login);
-                user.setPassword(password);
-                user.setToken(token);
-                user.setSalt(salt);
-                list.add(user);
+                list.add(new User(resultSet.getLong(USER_ID_COLUMN),
+                        resultSet.getString(USER_NAME_COLUMN),
+                        resultSet.getString(USER_SURNAME_COLUMN),
+                        resultSet.getString(USER_LOGIN_COLUMN),
+                        resultSet.getString(USER_PASSWORD_COLUMN),
+                        resultSet.getString(USER_SALT_COLUMN),
+                        resultSet.getString(USER_TOKEN_COLUMN)));
             }
         } catch (SQLException e) {
             logger.error("Can't get users");
@@ -176,21 +160,13 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setString(1, token);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Long userId = resultSet.getLong(USER_ID_COLUMN);
-                String name = resultSet.getString(USER_NAME_COLUMN);
-                String surname = resultSet.getString(USER_SURNAME_COLUMN);
-                String login = resultSet.getString(USER_LOGIN_COLUMN);
-                String password = resultSet.getString(USER_PASSWORD_COLUMN);
-                String tokenUsers = resultSet.getString(USER_TOKEN_COLUMN);
-                String salt = resultSet.getString(USER_SALT_COLUMN);
-                User user = new User(userId);
-                user.setName(name);
-                user.setSurname(surname);
-                user.setLogin(login);
-                user.setPassword(password);
-                user.setToken(tokenUsers);
-                user.setSalt(salt);
-                return Optional.of(user);
+                return Optional.of(new User(resultSet.getLong(USER_ID_COLUMN),
+                        resultSet.getString(USER_NAME_COLUMN),
+                        resultSet.getString(USER_SURNAME_COLUMN),
+                        resultSet.getString(USER_LOGIN_COLUMN),
+                        resultSet.getString(USER_PASSWORD_COLUMN),
+                        resultSet.getString(USER_SALT_COLUMN),
+                        resultSet.getString(USER_TOKEN_COLUMN)));
             }
         } catch (SQLException e) {
             logger.error("Can't get user with token=" + token);
@@ -205,21 +181,13 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setString(1, login);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                Long userId = resultSet.getLong(USER_ID_COLUMN);
-                String name = resultSet.getString(USER_NAME_COLUMN);
-                String surname = resultSet.getString(USER_SURNAME_COLUMN);
-                String newLogin = resultSet.getString(USER_LOGIN_COLUMN);
-                String password = resultSet.getString(USER_PASSWORD_COLUMN);
-                String tokenUsers = resultSet.getString(USER_TOKEN_COLUMN);
-                String salt = resultSet.getString(USER_SALT_COLUMN);
-                User user = new User(userId);
-                user.setName(name);
-                user.setSurname(surname);
-                user.setLogin(newLogin);
-                user.setPassword(password);
-                user.setToken(tokenUsers);
-                user.setSalt(salt);
-                return Optional.of(user);
+                return Optional.of(new User(resultSet.getLong(USER_ID_COLUMN),
+                        resultSet.getString(USER_NAME_COLUMN),
+                        resultSet.getString(USER_SURNAME_COLUMN),
+                        resultSet.getString(USER_LOGIN_COLUMN),
+                        resultSet.getString(USER_PASSWORD_COLUMN),
+                        resultSet.getString(USER_SALT_COLUMN),
+                        resultSet.getString(USER_TOKEN_COLUMN)));
             }
         } catch (SQLException e) {
             logger.error("Can't get user with token=" + login);

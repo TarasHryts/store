@@ -15,6 +15,18 @@ public class User {
     private Bucket bucket;
     private Set<Role> roles = new HashSet<>();
 
+    public User(Long id, String name, String surname,
+                String login, String password,
+                String salt, String token) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = password;
+        this.salt = salt;
+        this.token = token;
+    }
+
     public User(String name, Bucket bucket) {
         this.name = name;
         this.bucket = bucket;
