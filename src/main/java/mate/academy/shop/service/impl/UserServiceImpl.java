@@ -1,7 +1,5 @@
 package mate.academy.shop.service.impl;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -68,22 +66,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> getByToken(String token) {
         return userDao.getByToken(token);
-    }
-
-    @Override
-    public String hashPassword(String password, byte[] salt) {
-        StringBuilder hashedPassword = new StringBuilder();
-        try {
-            MessageDigest messageDigest = MessageDigest.getInstance("SHA-512 ");
-            messageDigest.update(salt);
-            byte[] digest = messageDigest.digest(password.getBytes());
-            for (byte b : digest) {
-                hashedPassword.append(String.format("%02x",b));
-            }
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return hashedPassword.toString();
     }
 
     @Override

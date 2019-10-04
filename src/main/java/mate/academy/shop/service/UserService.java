@@ -23,7 +23,5 @@ public interface UserService {
 
     Optional<User> getByToken(String token);
 
-    String hashPassword(String password, byte[] salt);
-
     Optional<User> getByLogin(String login);
 }

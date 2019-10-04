@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import mate.academy.shop.anotation.Inject;
+import mate.academy.shop.factory.Util;
 import mate.academy.shop.model.Bucket;
 import mate.academy.shop.model.Role;
 import mate.academy.shop.model.User;
@@ -37,10 +38,10 @@ public class RegistrationController extends HttpServlet {
             throws ServletException, IOException {
         logger.info(this.getClass().getName() + " start working");
         User newUser = new User();
+        newUser.setSalt(Util.getRandomSalt());
         newUser.setLogin(req.getParameter("login"));
-        newUser.setPassword(req.getParameter("psw"));
-        newUser.setName(userService
-                .hashPassword(req.getParameter("user_name"), newUser.getSalt().getBytes()));
+        newUser.setPassword(Util.hashPassword(req.getParameter("psw"),newUser.getSalt()));
+        newUser.setName(req.getParameter("user_name"));
         newUser.setSurname(req.getParameter("user_surname"));
         newUser.addRole(Role.of("USER"));
         User user = userService.create(newUser);

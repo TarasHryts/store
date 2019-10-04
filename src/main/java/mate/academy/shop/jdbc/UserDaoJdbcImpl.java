@@ -40,7 +40,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setString(3, user.getLogin());
             statement.setString(4, user.getPassword());
             statement.setString(5, user.getToken());
-            statement.setString(6, user.getSalt());
+            statement.setBytes(6, user.getSalt());
             statement.executeUpdate();
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -66,7 +66,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                         resultSet.getString(USER_SURNAME_COLUMN),
                         resultSet.getString(USER_LOGIN_COLUMN),
                         resultSet.getString(USER_PASSWORD_COLUMN),
-                        resultSet.getString(USER_SALT_COLUMN),
+                        resultSet.getBytes(USER_SALT_COLUMN),
                         resultSet.getString(USER_TOKEN_COLUMN));
             }
         } catch (SQLException e) {
@@ -85,7 +85,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setString(3, user.getLogin());
             statement.setString(4, user.getPassword());
             statement.setString(5, user.getToken());
-            statement.setString(6, user.getSalt());
+            statement.setBytes(6, user.getSalt());
             statement.setLong(7, user.getId());
             statement.executeUpdate();
             return user;
@@ -118,7 +118,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                         resultSet.getString(USER_SURNAME_COLUMN),
                         resultSet.getString(USER_LOGIN_COLUMN),
                         resultSet.getString(USER_PASSWORD_COLUMN),
-                        resultSet.getString(USER_SALT_COLUMN),
+                        resultSet.getBytes(USER_SALT_COLUMN),
                         resultSet.getString(USER_TOKEN_COLUMN)));
             }
         } catch (SQLException e) {
@@ -139,7 +139,9 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 String name = resultSet.getString(USER_NAME_COLUMN);
                 String surname = resultSet.getString(USER_SURNAME_COLUMN);
                 String token = resultSet.getString(USER_TOKEN_COLUMN);
+                byte[] salt = resultSet.getBytes(USER_SALT_COLUMN);
                 User user = new User(userId);
+                user.setSalt(salt);
                 user.setName(name);
                 user.setSurname(surname);
                 user.setLogin(login);
@@ -165,7 +167,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                         resultSet.getString(USER_SURNAME_COLUMN),
                         resultSet.getString(USER_LOGIN_COLUMN),
                         resultSet.getString(USER_PASSWORD_COLUMN),
-                        resultSet.getString(USER_SALT_COLUMN),
+                        resultSet.getBytes(USER_SALT_COLUMN),
                         resultSet.getString(USER_TOKEN_COLUMN)));
             }
         } catch (SQLException e) {
@@ -186,7 +188,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                         resultSet.getString(USER_SURNAME_COLUMN),
                         resultSet.getString(USER_LOGIN_COLUMN),
                         resultSet.getString(USER_PASSWORD_COLUMN),
-                        resultSet.getString(USER_SALT_COLUMN),
+                        resultSet.getBytes(USER_SALT_COLUMN),
                         resultSet.getString(USER_TOKEN_COLUMN)));
             }
         } catch (SQLException e) {

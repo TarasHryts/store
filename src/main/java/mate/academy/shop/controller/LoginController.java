@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.dao.RoleDao;
 import mate.academy.shop.exceptions.AuthenticationException;
+import mate.academy.shop.factory.Util;
 import mate.academy.shop.model.Role;
 import mate.academy.shop.model.User;
 import mate.academy.shop.service.UserService;
@@ -37,8 +38,8 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         logger.info(this.getClass().getName() + " start working");
         String login = req.getParameter("login");
-        String password = userService.hashPassword(req.getParameter("psw"),
-                userService.getByLogin(login).get().getSalt().getBytes());
+        String password = Util.hashPassword(req.getParameter("psw"),
+                userService.getByLogin(login).get().getSalt());
         try {
             User user = userService.login(login, password);
             Cookie cookie = new Cookie("MATE", user.getToken());
