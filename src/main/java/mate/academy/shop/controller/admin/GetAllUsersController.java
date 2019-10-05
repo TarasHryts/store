@@ -1,4 +1,4 @@
-package mate.academy.shop.controller.adminControllers;
+package mate.academy.shop.controller.admin;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,7 +12,7 @@ import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class GetAllUsersController extends HttpServlet {
-    private final static Logger logger = Logger.getLogger(GetAllUsersController.class);
+    private static final Logger logger = Logger.getLogger(GetAllUsersController.class);
     @Inject
     private static UserService userService;
 

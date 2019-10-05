@@ -10,13 +10,15 @@ public interface UserDao {
 
     User get(Long id);
 
-    List<User> getAllUsers();
-
     User update(User user);
 
-    User delete(Long id);
+    void delete(Long id);
+
+    List<User> getAllUsers();
 
     User login(String login, String password) throws AuthenticationException;
 
     Optional<User> getByToken(String token);
+
+    Optional<User> getByLogin(String login);
 }

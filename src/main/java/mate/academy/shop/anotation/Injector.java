@@ -10,7 +10,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 public class Injector {
-    private final static Logger logger = Logger.getLogger(Injector.class);
+    private static final Logger logger = Logger.getLogger(Injector.class);
     private static final String PROJECT_MAIN_PACKAGE = "mate.academy.shop";
     private static List<Class> classes = new ArrayList<>();
 
@@ -44,8 +44,6 @@ public class Injector {
      *
      * @param packageName The base package
      * @return The classes
-     * @throws ClassNotFoundException
-     * @throws IOException
      */
     private static List<Class> getClasses(String packageName)
             throws ClassNotFoundException, IOException {
@@ -71,7 +69,6 @@ public class Injector {
      * @param directory   The base directory
      * @param packageName The package name for classes found inside the base directory
      * @return The classes
-     * @throws ClassNotFoundException
      */
     private static List<Class> findClasses(File directory, String packageName)
             throws ClassNotFoundException {

@@ -1,6 +1,7 @@
 package mate.academy.shop.jdbc;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,10 +15,9 @@ import org.apache.log4j.Logger;
 
 @Dao
 public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
-    private static final String ITEM_ID_CONST = "item_id";
-    private static final String ITEM_NAME_CONST = "name";
-    private static final String ITEM_PRICE_CONST = "price";
-    private static final String DB_NAME = "newdatabase";
+    private static final String ITEM_ID_COLUMN = "item_id";
+    private static final String ITEM_NAME_COLUMN = "name";
+    private static final String ITEM_PRICE_COLUMN = "price";
 
     private static Logger logger = Logger.getLogger(ItemDaoJdbcImpl.class);
 
@@ -28,134 +28,90 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
 
     @Override
     public Item create(Item item) {
-        Statement stmt = null;
-        String query = String
-                .format("INSERT INTO %s.items (%s, %s) VALUES ('%s', '%.4f');",
-                        DB_NAME, ITEM_NAME_CONST, ITEM_PRICE_CONST,
-                        item.getName(), item.getPrice());
-        try {
-            stmt = connection.createStatement();
-            stmt.executeQuery(query);
-            return item;
-        } catch (SQLException e) {
-            logger.warn("Can't create the item with name=" + item.getName());
-        } finally {
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                    logger.warn("Can't close statement ", e);
+        String query = "INSERT INTO items (name, price) VALUES (?, ?);";
+
+        try (PreparedStatement statement = connection
+                .prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            statement.setString(1, item.getName());
+            statement.setDouble(2, item.getPrice());
+            statement.executeUpdate();
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    Long itemId = generatedKeys.getLong(1);
+                    return get(itemId);
                 }
             }
+        } catch (SQLException e) {
+            logger.error("Can't create the item with name=" + item.getName());
         }
         return null;
     }
 
     @Override
     public Item get(Long id) {
-        Statement stmt = null;
-        String query = String.format("SELECT * FROM %s.items where item_id=%d;", DB_NAME, id);
-        try {
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                long itemId = rs.getLong(ITEM_ID_CONST);
-                String name = rs.getString(ITEM_NAME_CONST);
-                double price = rs.getDouble(ITEM_PRICE_CONST);
+        String query = "SELECT * FROM items where item_id=?;";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                long itemId = resultSet.getLong(ITEM_ID_COLUMN);
+                String name = resultSet.getString(ITEM_NAME_COLUMN);
+                double price = resultSet.getDouble(ITEM_PRICE_COLUMN);
                 Item item = new Item(itemId);
                 item.setName(name);
                 item.setPrice(price);
                 return item;
             }
         } catch (SQLException e) {
-            logger.warn("Can't get item by id=" + id);
-        } finally {
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                    logger.warn("Can't close statement ", e);
-                }
-            }
+            logger.error("Can't get item by id=" + id);
         }
         return null;
     }
 
     @Override
     public Item update(Item item) {
-        Statement stmt = null;
-        String query = String
-                .format("UPDATE %s.items SET item_id=%d, name='%s', price=%.4f WHERE item_id=%d;",
-                        DB_NAME, item.getId(), item.getName(), item.getPrice(), item.getId());
-        try {
-            stmt = connection.createStatement();
-            stmt.executeQuery(query);
+        String query = "UPDATE items SET item_id=?, name=?, price=? WHERE item_id=?;";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, item.getId());
+            statement.setString(2, item.getName());
+            statement.setDouble(3, item.getPrice());
+            statement.setLong(4, item.getId());
+            statement.executeUpdate();
             return item;
         } catch (SQLException e) {
-            logger.warn("Can't update the item with id=" + item.getId());
-        } finally {
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                    logger.warn("Can't close statement ", e);
-                }
-            }
+            logger.error("Can't update the item with id=" + item.getId());
         }
         return null;
     }
 
     @Override
-    public Item delete(Long id) {
-        Statement stmt = null;
-        Item item = get(id);
-        String query = String
-                .format("DELETE FROM %s.items WHERE item_id=%d;", DB_NAME, id);
-        try {
-            stmt = connection.createStatement();
-            stmt.executeQuery(query);
-            return item;
+    public void delete(Long id) {
+        String query = "DELETE FROM items WHERE item_id=?;";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setLong(1, id);
+            statement.executeUpdate();
         } catch (SQLException e) {
-            logger.warn("Can't create the item with id=" + id);
-        } finally {
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                    logger.warn("Can't close statement ", e);
-                }
-            }
+            logger.error("Can't delete the item with id=" + id);
         }
-        return null;
     }
 
     @Override
     public List<Item> getAllItems() {
         List<Item> list = new ArrayList<>();
-        Statement stmt = null;
-        String query = String.format("SELECT * FROM %s.items;", DB_NAME);
-        try {
-            stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                long itemId = rs.getLong(ITEM_ID_CONST);
-                String name = rs.getString(ITEM_NAME_CONST);
-                double price = rs.getDouble(ITEM_PRICE_CONST);
+        String query = "SELECT * FROM items;";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            ResultSet resultSet = statement.executeQuery(query);
+            while (resultSet.next()) {
+                long itemId = resultSet.getLong(ITEM_ID_COLUMN);
+                String name = resultSet.getString(ITEM_NAME_COLUMN);
+                double price = resultSet.getDouble(ITEM_PRICE_COLUMN);
                 Item item = new Item(itemId);
                 item.setName(name);
                 item.setPrice(price);
                 list.add(item);
             }
         } catch (SQLException e) {
-            logger.warn("Can't get items");
-        } finally {
-            if (stmt != null) {
-                try {
-                    stmt.close();
-                } catch (SQLException e) {
-                    logger.warn("Can't close statement ", e);
-                }
-            }
+            logger.error("Can't get items");
         }
         return list;
     }

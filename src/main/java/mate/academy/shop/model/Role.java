@@ -1,22 +1,22 @@
 package mate.academy.shop.model;
 
-import mate.academy.shop.factory.generators.RoleIdGenerator;
-
 public class Role {
-    private final Long id;
+    private Long id;
     private RoleName roleName;
 
     public Role() {
-        this.id = RoleIdGenerator.getIdGenerator();
     }
 
     public Role(RoleName roleName) {
-        this();
         this.roleName = roleName;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public RoleName getRoleName() {
@@ -32,6 +32,16 @@ public class Role {
     }
 
     public enum RoleName {
-        USER, ADMIN;
+        USER("USER"),
+        ADMIN("ADMIN");
+        private final String name;
+
+        RoleName(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
     }
 }

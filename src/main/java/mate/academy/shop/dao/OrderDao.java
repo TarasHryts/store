@@ -13,4 +13,6 @@ public interface OrderDao {
     Order update(Order order);
 
     Order delete(Long id);
+
+    void addItemToOrder(Long itemId, Long orderId);
 }

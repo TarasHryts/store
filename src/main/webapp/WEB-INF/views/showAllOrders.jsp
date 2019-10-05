@@ -18,7 +18,6 @@
         <th>User Id</th>
         <th>User Name</th>
         <th>Order Id</th>
-        <th>Action</th>
 
     </tr>
     <c:forEach var="order" items="${orders}">
@@ -32,13 +31,10 @@
             <td>
                 <c:out value="${order.id}"/>
             </td>
-            <td>
-                <a href="/storeDB_war_exploded/servlet/deleteOrder?order_id=${order.id}">Delete Order</a>
-            </td>
         </tr>
     </c:forEach>
 </table>
-<a href="/storeDB_war_exploded/servlet/getAllItems">Сontinue Shopping</a>
+<a href="/shop_war_exploded/servlet/getAllItems">Сontinue Shopping</a>
 
 </body>
 </html>

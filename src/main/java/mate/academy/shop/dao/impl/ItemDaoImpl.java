@@ -40,10 +40,9 @@ public class ItemDaoImpl implements ItemDao {
     }
 
     @Override
-    public Item delete(Long id) {
+    public void delete(Long id) {
         Item item = get(id);
         Storage.items.removeIf(x -> x.getId().equals(id));
-        return item;
     }
 
     @Override

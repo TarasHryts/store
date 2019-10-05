@@ -10,7 +10,9 @@ public interface ItemService {
 
     Item update(Item item);
 
-    Item delete(Long id);
+    void delete(Long id);
 
     List<Item> getAll();
+
+    List<Item> getItemForBucket(Long bucketId);
 }

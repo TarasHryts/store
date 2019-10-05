@@ -4,15 +4,22 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.anotation.Injector;
-import mate.academy.shop.model.Role;
-import mate.academy.shop.model.User;
+import mate.academy.shop.dao.BucketDao;
+import mate.academy.shop.dao.RoleDao;
+import mate.academy.shop.service.ItemService;
 import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class InjectInitializer implements ServletContextListener {
-    private final static Logger logger = Logger.getLogger(InjectInitializer.class);
+    private static final Logger logger = Logger.getLogger(InjectInitializer.class);
     @Inject
     private static UserService userService;
+    @Inject
+    private static ItemService itemService;
+    @Inject
+    private static RoleDao roleDao;
+    @Inject
+    private static BucketDao bucketDao;
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -23,14 +30,6 @@ public class InjectInitializer implements ServletContextListener {
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
-
-        User admin = new User();
-        admin.setName("Ostap");
-        admin.setSurname("Bender");
-        admin.addRole(Role.of("ADMIN"));
-        admin.setLogin("admin");
-        admin.setPassword("1");
-        userService.create(admin);
     }
 
     @Override
