@@ -1,4 +1,4 @@
-package mate.academy.shop.jdbc;
+package mate.academy.shop.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao {
     private static final String BUCKET_ID_COLUMN = "bucket_id";
     private static final String USER_ID_COLUMN = "user_id";
-    private static Logger logger = Logger.getLogger(ItemDaoJdbcImpl.class);
+    private static Logger logger = Logger.getLogger(BucketDaoJdbcImpl.class);
 
     public BucketDaoJdbcImpl(Connection connection) {
         super(connection);

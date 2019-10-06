@@ -1,4 +1,4 @@
-package mate.academy.shop.jdbc;
+package mate.academy.shop.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,7 +23,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     private static final String USER_PASSWORD_COLUMN = "password";
     private static final String USER_TOKEN_COLUMN = "token";
     private static final String USER_SALT_COLUMN = "salt";
-    private static Logger logger = Logger.getLogger(ItemDaoJdbcImpl.class);
+    private static Logger logger = Logger.getLogger(UserDaoJdbcImpl.class);
 
     public UserDaoJdbcImpl(Connection connection) {
         super(connection);

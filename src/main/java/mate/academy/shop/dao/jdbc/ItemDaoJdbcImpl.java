@@ -1,4 +1,4 @@
-package mate.academy.shop.jdbc;
+package mate.academy.shop.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
