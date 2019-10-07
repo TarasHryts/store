@@ -1,6 +1,7 @@
 package mate.academy.shop.dao.hibernate;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.shop.anotation.Dao;
 import mate.academy.shop.dao.ItemDao;
 import mate.academy.shop.factory.HibernateUtil;
@@ -11,7 +12,7 @@ import org.hibernate.Transaction;
 @Dao
 public class ItemDaoHibernateImpl implements ItemDao {
     @Override
-    public Item create(Item item) {
+    public Optional<Item> create(Item item) {
         Long itemId = null;
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession();) {
@@ -24,19 +25,19 @@ public class ItemDaoHibernateImpl implements ItemDao {
             }
         }
         item.setId(itemId);
-        return item;
+        return Optional.of(item);
     }
 
     @Override
-    public Item get(Long id) {
+    public Optional<Item> get(Long id) {
         try (Session session = HibernateUtil.getSessionFactory().openSession();) {
             Item item = session.get(Item.class, id);
-            return item;
+            return Optional.of(item);
         }
     }
 
     @Override
-    public Item update(Item item) {
+    public Optional<Item> update(Item item) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession();) {
             transaction = session.beginTransaction();
@@ -47,7 +48,7 @@ public class ItemDaoHibernateImpl implements ItemDao {
                 transaction.rollback();
             }
         }
-        return item;
+        return Optional.of(item);
     }
 
     @Override

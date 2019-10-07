@@ -27,8 +27,8 @@ public class AddToBucketController extends HttpServlet {
             throws ServletException, IOException {
         logger.info(this.getClass().getName() + " start working");
         Long userId = (Long) req.getSession(true).getAttribute("userId");
-        User user = userService.get(userId);
-        Bucket bucket = bucketService.getBucketByUser(userId);
+        User user = userService.get(userId).get();
+        Bucket bucket = bucketService.getBucketByUser(userId).get();
         String itemId = req.getParameter("item_id");
         bucketService.addItem(bucket.getId(), Long.valueOf(itemId));
         resp.sendRedirect(req.getContextPath() + "/servlet/bucket");

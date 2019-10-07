@@ -2,6 +2,7 @@ package mate.academy.shop.dao.impl;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import mate.academy.shop.anotation.Dao;
 import mate.academy.shop.dao.OrderDao;
@@ -14,18 +15,18 @@ public class OrderDaoImpl implements OrderDao {
     private static final Logger logger = Logger.getLogger(OrderDaoImpl.class);
 
     @Override
-    public Order create(Order order) {
+    public Optional<Order> create(Order order) {
         Storage.orders.add(order);
-        return order;
+        return Optional.of(order);
     }
 
     @Override
-    public Order get(Long orderId) {
-        return Storage.orders.stream()
+    public Optional<Order> get(Long orderId) {
+        return Optional.of(Storage.orders.stream()
                 .filter(x -> orderId.equals(x.getId()))
                 .findFirst()
                 .orElseThrow(() ->
-                        new NoSuchElementException("Can't find order with id " + orderId));
+                        new NoSuchElementException("Can't find order with id " + orderId)));
     }
 
     @Override
@@ -36,11 +37,11 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public Order update(Order order) {
+    public Optional<Order> update(Order order) {
         for (int i = 0; i < Storage.orders.size(); i++) {
             if (order.getId().equals(Storage.orders.get(i))) {
                 Storage.orders.set(i, order);
-                return order;
+                return Optional.of(order);
             }
         }
         logger.error("Can't find order with id " + order.getId());
@@ -48,10 +49,10 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public Order delete(Long id) {
-        Order order = get(id);
+    public Optional<Order> delete(Long id) {
+        Order order = get(id).get();
         Storage.orders.removeIf(x -> id.equals(x.getId()));
-        return order;
+        return Optional.of(order);
     }
 
     @Override

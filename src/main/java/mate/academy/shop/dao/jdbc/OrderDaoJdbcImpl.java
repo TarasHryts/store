@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import mate.academy.shop.anotation.Dao;
 import mate.academy.shop.dao.OrderDao;
 import mate.academy.shop.model.Order;
@@ -23,7 +24,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
     }
 
     @Override
-    public Order create(Order order) {
+    public Optional<Order> create(Order order) {
         String query = "INSERT INTO orders (user_id) VALUES (?);";
         try (PreparedStatement statement = connection
                 .prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -54,7 +55,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
     }
 
     @Override
-    public Order get(Long orderId) {
+    public Optional<Order> get(Long orderId) {
         String query = "SELECT * FROM orders where order_id=?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, orderId);
@@ -65,7 +66,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
                 Order order = new Order();
                 order.setId(newOrderId);
                 order.setUserId(newUserId);
-                return order;
+                return Optional.of(order);
             }
         } catch (SQLException e) {
             logger.error("Can't get order by id=" + orderId);
@@ -82,7 +83,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Long newOrderId = resultSet.getLong("order_id");
-                list.add(get(newOrderId));
+                list.add(get(newOrderId).get());
             }
         } catch (SQLException e) {
             logger.error("Can't find order for user with id=" + userId);
@@ -103,14 +104,14 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
     }
 
     @Override
-    public Order update(Order order) {
+    public Optional<Order> update(Order order) {
         String query = "UPDATE orders SET order_id=?, user_id=? WHERE order_id=?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, order.getId());
             statement.setLong(2, order.getUserId());
             statement.setLong(3, order.getId());
             statement.executeUpdate();
-            return order;
+            return Optional.of(order);
         } catch (SQLException e) {
             logger.error("Can't update the order with id=" + order.getId());
         }
@@ -118,13 +119,13 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
     }
 
     @Override
-    public Order delete(Long id) {
-        Order order = get(id);
+    public Optional<Order> delete(Long id) {
+        Order order = get(id).get();
         String query = "DELETE FROM orders WHERE order_id=?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             statement.executeUpdate();
-            return order;
+            return Optional.of(order);
         } catch (SQLException e) {
             logger.error("Can't delete the order with id=" + id);
         }

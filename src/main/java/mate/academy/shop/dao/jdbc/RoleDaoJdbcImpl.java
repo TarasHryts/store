@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import mate.academy.shop.anotation.Dao;
 import mate.academy.shop.dao.RoleDao;
@@ -24,12 +25,12 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
     }
 
     @Override
-    public Role create(Role role) {
+    public Optional<Role> create(Role role) {
         String query = "INSERT INTO roles (name) VALUES (?);";
         try (PreparedStatement statement = connection.prepareStatement(query);) {
             statement.setString(1, role.getRoleName().getName());
             statement.executeUpdate();
-            return role;
+            return Optional.of(role);
         } catch (SQLException e) {
             logger.error("Cat't create the role with name=" + role.getRoleName());
         }
@@ -37,7 +38,7 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
     }
 
     @Override
-    public Role get(Long id) {
+    public Optional<Role> get(Long id) {
         String query = "SELECT * FROM newdatabase.roles where role_id=?;";
         try (PreparedStatement statement = connection.prepareStatement(query);) {
             statement.setLong(1, id);
@@ -47,7 +48,7 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
                 String roleName = resultSet.getString(ROLE_NAME_COLUMN);
                 Role role = Role.of(roleName);
                 role.setId(roleId);
-                return role;
+                return Optional.of(role);
             }
         } catch (SQLException e) {
             logger.error("Cat't get role by id=" + id);
@@ -56,14 +57,14 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
     }
 
     @Override
-    public Role update(Role role) {
+    public Optional<Role> update(Role role) {
         String query = "UPDATE roles SET role_id=?, name=? WHERE role_id=?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, role.getId());
             statement.setString(2, role.getRoleName().getName());
             statement.setLong(3, role.getId());
             statement.executeUpdate();
-            return role;
+            return Optional.of(role);
         } catch (SQLException e) {
             logger.error("Can't update the role with id=" + role.getId());
         }
@@ -90,7 +91,7 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Long roleId = resultSet.getLong(ROLE_ID_COLUMN);
-                roleSet.add(get(roleId));
+                roleSet.add(get(roleId).get());
             }
         } catch (SQLException e) {
             logger.error("Can't find roles for user with id=" + userId);

@@ -1,14 +1,15 @@
 package mate.academy.shop.dao;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.shop.model.Item;
 
 public interface ItemDao {
-    Item create(Item item);
+    Optional<Item> create(Item item);
 
-    Item get(Long id);
+    Optional<Item> get(Long id);
 
-    Item update(Item item);
+    Optional<Item> update(Item item);
 
     void delete(Long id);
 

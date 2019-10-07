@@ -25,26 +25,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User create(User user) {
+    public Optional<User> create(User user) {
         user.setToken(getToken());
-        User newUser = userDao.create(user);
+        User newUser = userDao.create(user).get();
         roleDao.setRoleForUser(DEFAULT_ROLE, newUser.getId());
         newUser.setRoles(roleDao.getAllRoleForUser(newUser.getId()));
-        return newUser;
+        return Optional.of(newUser);
     }
 
     @Override
-    public User get(Long id) {
+    public Optional<User> get(Long id) {
         return userDao.get(id);
     }
 
     @Override
     public List<Order> getAllOrders(Long userId) {
-        return userDao.get(userId).getOrders();
+        return userDao.get(userId).get().getOrders();
     }
 
     @Override
-    public User update(User user) {
+    public Optional<User> update(User user) {
         return userDao.update(user);
     }
 
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User login(String login, String password) throws AuthenticationException {
+    public Optional<User> login(String login, String password) throws AuthenticationException {
         return userDao.login(login, password);
     }
 

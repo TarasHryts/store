@@ -2,6 +2,7 @@ package mate.academy.shop.dao.impl;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import mate.academy.shop.anotation.Dao;
 import mate.academy.shop.dao.ItemDao;
 import mate.academy.shop.model.Item;
@@ -13,26 +14,26 @@ public class ItemDaoImpl implements ItemDao {
     private static final Logger logger = Logger.getLogger(ItemDaoImpl.class);
 
     @Override
-    public Item create(Item item) {
+    public Optional<Item> create(Item item) {
         Storage.items.add(item);
-        return item;
+        return Optional.of(item);
     }
 
     @Override
-    public Item get(Long id) {
-        return Storage.items
+    public Optional<Item> get(Long id) {
+        return Optional.of(Storage.items
                 .stream()
                 .filter(i -> i.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Can't find item with id " + id));
+                .orElseThrow(() -> new NoSuchElementException("Can't find item with id " + id)));
     }
 
     @Override
-    public Item update(Item item) {
+    public Optional<Item> update(Item item) {
         for (int i = 0; i < Storage.items.size(); i++) {
             if (Storage.items.get(i).getId().equals(item.getId())) {
                 Storage.items.set(i, item);
-                return item;
+                return Optional.of(item);
             }
         }
         logger.error("Can't find item with id " + item.getId());
@@ -41,7 +42,7 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public void delete(Long id) {
-        Item item = get(id);
+        Item item = get(id).get();
         Storage.items.removeIf(x -> x.getId().equals(id));
     }
 

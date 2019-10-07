@@ -15,17 +15,17 @@ public class UserDaoImpl implements UserDao {
     private static final Logger logger = Logger.getLogger(UserDaoImpl.class);
 
     @Override
-    public User create(User user) {
+    public Optional<User> create(User user) {
         Storage.users.add(user);
-        return user;
+        return Optional.of(user);
     }
 
     @Override
-    public User get(Long id) {
-        return Storage.users.stream()
+    public Optional<User> get(Long id) {
+        return Optional.of(Storage.users.stream()
                 .filter(x -> id.equals(x.getId()))
                 .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Can't find user with id " + id));
+                .orElseThrow(() -> new NoSuchElementException("Can't find user with id " + id)));
     }
 
     @Override
@@ -34,11 +34,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User update(User user) {
+    public Optional<User> update(User user) {
         for (int i = 0; i < Storage.users.size(); i++) {
             if (user.getId().equals(Storage.users.get(i))) {
                 Storage.users.set(i, user);
-                return user;
+                return Optional.of(user);
             }
         }
         logger.error("Can't find user with id " + user.getId());
@@ -47,19 +47,19 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void delete(Long id) {
-        User user = get(id);
+        User user = get(id).get();
         Storage.users.removeIf(x -> id.equals(x.getId()));
     }
 
     @Override
-    public User login(String login, String password) throws AuthenticationException {
+    public Optional<User> login(String login, String password) throws AuthenticationException {
         Optional<User> user = Storage.users.stream()
                 .filter(x -> x.getLogin().equals(login))
                 .findFirst();
         if (user.isEmpty() || !user.get().getPassword().equals(password)) {
             throw new AuthenticationException("incorrect username or password");
         }
-        return user.get();
+        return Optional.of(user.get());
     }
 
     @Override

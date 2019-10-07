@@ -1,6 +1,7 @@
 package mate.academy.shop.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.anotation.Service;
 import mate.academy.shop.dao.BucketDao;
@@ -16,17 +17,17 @@ public class ItemServiceImpl implements ItemService {
     private static BucketDao bucketDao;
 
     @Override
-    public Item create(Item item) {
+    public Optional<Item> create(Item item) {
         return itemDao.create(item);
     }
 
     @Override
-    public Item get(Long id) {
+    public Optional<Item> get(Long id) {
         return itemDao.get(id);
     }
 
     @Override
-    public Item update(Item item) {
+    public Optional<Item> update(Item item) {
         return itemDao.update(item);
     }
 

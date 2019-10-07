@@ -2,6 +2,7 @@ package mate.academy.shop.dao.impl;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import mate.academy.shop.anotation.Dao;
 import mate.academy.shop.dao.BucketDao;
 import mate.academy.shop.model.Bucket;
@@ -14,27 +15,27 @@ public class BucketDaoImpl implements BucketDao {
     private static final Logger logger = Logger.getLogger(BucketDaoImpl.class);
 
     @Override
-    public Bucket create(Bucket bucket) {
+    public Optional<Bucket> create(Bucket bucket) {
         Storage.buckets.add(bucket);
-        return bucket;
+        return Optional.of(bucket);
     }
 
     @Override
-    public Bucket get(Long bucketId) {
-        return Storage.buckets
+    public Optional<Bucket> get(Long bucketId) {
+        return Optional.of(Storage.buckets
                 .stream()
                 .filter(b -> b.getId().equals(bucketId))
                 .findFirst()
                 .orElseThrow(() ->
-                        new NoSuchElementException("Can't find bucket with id " + bucketId));
+                        new NoSuchElementException("Can't find bucket with id " + bucketId)));
     }
 
     @Override
-    public Bucket update(Bucket bucket) {
+    public Optional<Bucket> update(Bucket bucket) {
         for (int i = 0; i < Storage.buckets.size(); i++) {
             if (bucket.getId().equals(Storage.buckets.get(i).getId())) {
                 Storage.buckets.set(i, bucket);
-                return bucket;
+                return Optional.of(bucket);
             }
         }
         logger.error("Can't find element with id: " + bucket.getId());
@@ -42,10 +43,10 @@ public class BucketDaoImpl implements BucketDao {
     }
 
     @Override
-    public Bucket delete(Long id) {
-        Bucket bucket = get(id);
+    public Optional<Bucket> delete(Long id) {
+        Bucket bucket = get(id).get();
         Storage.buckets.removeIf(x -> id.equals(x.getId()));
-        return bucket;
+        return Optional.of(bucket);
     }
 
     @Override
@@ -54,7 +55,7 @@ public class BucketDaoImpl implements BucketDao {
     }
 
     @Override
-    public Bucket getBucketByUser(Long userId) {
+    public Optional<Bucket> getBucketByUser(Long userId) {
         return null;
     }
 

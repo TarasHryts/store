@@ -29,7 +29,7 @@ public class DeleteOrderController extends HttpServlet {
         String orderId = req.getParameter("order_id");
         orderService.delete(Long.valueOf(orderId));
         List<Order> orders = orderService.getAllOrdersForUser(userId);
-        User user = userService.get(userId);
+        User user = userService.get(userId).get();
         req.setAttribute("orders", orders);
         req.setAttribute("user", user);
         req.getRequestDispatcher("/WEB-INF/views/showAllOrders.jsp").forward(req, resp);

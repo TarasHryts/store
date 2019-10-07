@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import mate.academy.shop.anotation.Dao;
 import mate.academy.shop.dao.ItemDao;
 import mate.academy.shop.model.Item;
@@ -27,7 +28,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     }
 
     @Override
-    public Item create(Item item) {
+    public Optional<Item> create(Item item) {
         String query = "INSERT INTO items (name, price) VALUES (?, ?);";
 
         try (PreparedStatement statement = connection
@@ -48,7 +49,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     }
 
     @Override
-    public Item get(Long id) {
+    public Optional<Item> get(Long id) {
         String query = "SELECT * FROM items where item_id=?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
@@ -60,7 +61,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
                 Item item = new Item(itemId);
                 item.setName(name);
                 item.setPrice(price);
-                return item;
+                return Optional.of(item);
             }
         } catch (SQLException e) {
             logger.error("Can't get item by id=" + id);
@@ -69,7 +70,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     }
 
     @Override
-    public Item update(Item item) {
+    public Optional<Item> update(Item item) {
         String query = "UPDATE items SET item_id=?, name=?, price=? WHERE item_id=?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, item.getId());
@@ -77,7 +78,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
             statement.setDouble(3, item.getPrice());
             statement.setLong(4, item.getId());
             statement.executeUpdate();
-            return item;
+            return Optional.of(item);
         } catch (SQLException e) {
             logger.error("Can't update the item with id=" + item.getId());
         }
