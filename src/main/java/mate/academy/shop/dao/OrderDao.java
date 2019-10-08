@@ -1,18 +1,19 @@
 package mate.academy.shop.dao;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.shop.model.Order;
 
 public interface OrderDao {
-    Order create(Order order);
+    Optional<Order> create(Order order);
 
-    Order get(Long orderId);
+    Optional<Order> get(Long orderId);
 
     List<Order> getByUser(Long userId);
 
-    Order update(Order order);
+    Optional<Order> update(Order order);
 
-    Order delete(Long id);
+    Optional<Order> delete(Long id);
 
     void addItemToOrder(Long itemId, Long orderId);
 }

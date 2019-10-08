@@ -7,19 +7,19 @@ import mate.academy.shop.model.Order;
 import mate.academy.shop.model.User;
 
 public interface UserService {
-    User create(User user);
+    Optional<User> create(User user);
 
-    User get(Long id);
+    Optional<User> get(Long id);
 
     List<Order> getAllOrders(Long userId);
 
-    User update(User user);
+    Optional<User> update(User user);
 
     void delete(Long id);
 
     List<User> getAll();
 
-    User login(String login, String password) throws AuthenticationException;
+    Optional<User> login(String login, String password) throws AuthenticationException;
 
     Optional<User> getByToken(String token);
 

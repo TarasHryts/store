@@ -2,6 +2,7 @@ package mate.academy.shop.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.anotation.Service;
 import mate.academy.shop.dao.BucketDao;
@@ -24,12 +25,12 @@ public class OrderServiceImpl implements OrderService {
     private static BucketDao bucketDao;
 
     @Override
-    public Order create(Order order) {
+    public Optional<Order> create(Order order) {
         return orderDao.create(order);
     }
 
     @Override
-    public Order get(Long id) {
+    public Optional<Order> get(Long id) {
         return orderDao.get(id);
     }
 
@@ -39,28 +40,28 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order update(Order order) {
+    public Optional<Order> update(Order order) {
         return orderDao.update(order);
     }
 
     @Override
-    public Order completeOrder(List<Item> items, Long userId) {
+    public Optional<Order> completeOrder(List<Item> items, Long userId) {
         List<Item> itemList = new ArrayList<>(items);
         Order order = new Order();
         order.setUserId(userId);
-        order.setId(orderDao.create(order).getId());
-        Long bucketId = bucketDao.getBucketByUser(userId).getId();
+        order.setId(orderDao.create(order).get().getId());
+        Long bucketId = bucketDao.getBucketByUser(userId).get().getId();
         for (Item item : itemList) {
             orderDao.addItemToOrder(item.getId(), order.getId());
         }
         bucketDao.deleteAllItemsFromBucket(bucketId);
-        return order;
+        return Optional.of(order);
     }
 
     @Override
-    public Order delete(Long id) {
-        Order order = get(id);
+    public Optional<Order> delete(Long id) {
+        Order order = get(id).get();
         orderDao.delete(id);
-        return order;
+        return Optional.of(order);
     }
 }

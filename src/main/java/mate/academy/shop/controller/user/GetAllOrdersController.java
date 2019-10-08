@@ -27,7 +27,7 @@ public class GetAllOrdersController extends HttpServlet {
         logger.info(this.getClass().getName() + " start working");
         Long userId = (Long) req.getSession(true).getAttribute("userId");
         List<Order> orders = orderService.getAllOrdersForUser(userId);
-        User user = userService.get(userId);
+        User user = userService.get(userId).get();
         req.setAttribute("orders", orders);
         req.setAttribute("user", user);
         req.getRequestDispatcher("/WEB-INF/views/showAllOrders.jsp").forward(req, resp);

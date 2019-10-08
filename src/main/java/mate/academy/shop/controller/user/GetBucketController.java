@@ -27,7 +27,7 @@ public class GetBucketController extends HttpServlet {
             throws ServletException, IOException {
         logger.info(this.getClass().getName() + " start working");
         Long userId = (Long) req.getSession(true).getAttribute("userId");
-        Long bucketId = bucketService.getBucketByUser(userId).getId();
+        Long bucketId = bucketService.getBucketByUser(userId).get().getId();
         List<Item> items = bucketService.getAllItems(bucketId);
         req.setAttribute("items", items);
         req.getRequestDispatcher("/WEB-INF/views/bucket.jsp").forward(req, resp);

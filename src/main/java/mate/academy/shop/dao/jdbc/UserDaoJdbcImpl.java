@@ -1,4 +1,4 @@
-package mate.academy.shop.jdbc;
+package mate.academy.shop.dao.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,14 +23,14 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     private static final String USER_PASSWORD_COLUMN = "password";
     private static final String USER_TOKEN_COLUMN = "token";
     private static final String USER_SALT_COLUMN = "salt";
-    private static Logger logger = Logger.getLogger(ItemDaoJdbcImpl.class);
+    private static Logger logger = Logger.getLogger(UserDaoJdbcImpl.class);
 
     public UserDaoJdbcImpl(Connection connection) {
         super(connection);
     }
 
     @Override
-    public User create(User user) {
+    public Optional<User> create(User user) {
         String query = "INSERT INTO users (name, surname, login, password, token, salt) "
                 + "VALUES (?, ?, ?, ?, ?, ?);";
         try (PreparedStatement statement = connection
@@ -55,19 +55,19 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public User get(Long id) {
+    public Optional<User> get(Long id) {
         String query = "SELECT * FROM users where user_id=?";
         try (PreparedStatement statement = connection.prepareStatement(query);) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                return new User(resultSet.getLong(USER_ID_COLUMN),
+                return Optional.of(new User(resultSet.getLong(USER_ID_COLUMN),
                         resultSet.getString(USER_NAME_COLUMN),
                         resultSet.getString(USER_SURNAME_COLUMN),
                         resultSet.getString(USER_LOGIN_COLUMN),
                         resultSet.getString(USER_PASSWORD_COLUMN),
                         resultSet.getBytes(USER_SALT_COLUMN),
-                        resultSet.getString(USER_TOKEN_COLUMN));
+                        resultSet.getString(USER_TOKEN_COLUMN)));
             }
         } catch (SQLException e) {
             logger.error("Can't get user by id=" + id);
@@ -76,7 +76,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public User update(User user) {
+    public Optional<User> update(User user) {
         String query = "UPDATE users SET name=?, surname=?, login=?, password=?, token=?, salt=? "
                 + "WHERE user_id=?;";
         try (PreparedStatement statement = connection.prepareStatement(query);) {
@@ -88,7 +88,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setBytes(6, user.getSalt());
             statement.setLong(7, user.getId());
             statement.executeUpdate();
-            return user;
+            return Optional.of(user);
         } catch (SQLException e) {
             logger.error("Can't update the user with id=" + user.getId());
         }
@@ -128,7 +128,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public User login(String login, String password) throws AuthenticationException {
+    public Optional<User> login(String login, String password) throws AuthenticationException {
         String query = "SELECT * FROM users WHERE login=? AND password=?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, login);
@@ -147,7 +147,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 user.setLogin(login);
                 user.setPassword(password);
                 user.setToken(token);
-                return user;
+                return Optional.of(user);
             }
         } catch (SQLException e) {
             logger.error("Incorrect username or password");
