@@ -1,18 +1,50 @@
 package mate.academy.shop.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
+@Entity
+@Table(name = "users")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id", columnDefinition = "INTEGER")
     private Long id;
     private String name;
     private String surname;
     private String login;
     private String password;
-    private byte[] salt;
-    private Bucket bucket;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "role_id"))
     private Set<Role> roles = new HashSet<>();
+    private String token;
+    @Transient
+    private List<Order> orders = new ArrayList<>();
+    @Column(columnDefinition = "BLOB")
+    private byte[] salt;
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
+
+    public User() {
+    }
 
     public User(Long id, String name, String surname,
                 String login, String password,
@@ -28,21 +60,15 @@ public class User {
 
     public User(String name, Bucket bucket) {
         this.name = name;
-        this.bucket = bucket;
     }
 
-    public User() {
-    }
-
-    public byte[]  getSalt() {
+    public byte[] getSalt() {
         return salt;
     }
 
     public void setSalt(byte[] salt) {
         this.salt = salt;
     }
-
-    private String token;
 
     public User(Long id) {
         this.id = id;
@@ -66,14 +92,6 @@ public class User {
 
     public void deleteRole(Role role) {
         roles.remove(role);
-    }
-
-    public Bucket getBucket() {
-        return bucket;
-    }
-
-    public void setBucket(Bucket bucket) {
-        this.bucket = bucket;
     }
 
     public String getToken() {
@@ -111,8 +129,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    private List<Order> orders;
 
     public Long getId() {
         return id;

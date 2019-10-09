@@ -56,7 +56,7 @@ public class ItemDaoHibernateImpl implements ItemDao {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession();) {
             transaction = session.beginTransaction();
-            session.delete(get(id));
+            session.delete(get(id).get());
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) {
@@ -68,7 +68,8 @@ public class ItemDaoHibernateImpl implements ItemDao {
     @Override
     public List<Item> getAllItems() {
         try (Session session = HibernateUtil.getSessionFactory().openSession();) {
-            return session.createSQLQuery("SELECT * FROM items;").addEntity(Item.class).list();
+            return session.createQuery("FROM Item").list();
+            //return session.createSQLQuery("SELECT * FROM items;").addEntity(Item.class).list();
         }
     }
 }

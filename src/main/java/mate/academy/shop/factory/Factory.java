@@ -8,11 +8,11 @@ import mate.academy.shop.dao.ItemDao;
 import mate.academy.shop.dao.OrderDao;
 import mate.academy.shop.dao.RoleDao;
 import mate.academy.shop.dao.UserDao;
+import mate.academy.shop.dao.hibernate.BucketDaoHibernateImpl;
 import mate.academy.shop.dao.hibernate.ItemDaoHibernateImpl;
-import mate.academy.shop.dao.jdbc.BucketDaoJdbcImpl;
+import mate.academy.shop.dao.hibernate.RoleDaoHibernateImpl;
+import mate.academy.shop.dao.hibernate.UserDaoHibernateImpl;
 import mate.academy.shop.dao.jdbc.OrderDaoJdbcImpl;
-import mate.academy.shop.dao.jdbc.RoleDaoJdbcImpl;
-import mate.academy.shop.dao.jdbc.UserDaoJdbcImpl;
 import mate.academy.shop.service.BucketService;
 import mate.academy.shop.service.ItemService;
 import mate.academy.shop.service.OrderService;
@@ -51,14 +51,14 @@ public class Factory {
 
     public static RoleDao getRoleDao() {
         if (roleDao == null) {
-            roleDao = new RoleDaoJdbcImpl(connection);
+            roleDao = new RoleDaoHibernateImpl();
         }
         return roleDao;
     }
 
     public static BucketDao getBucketDao() {
         if (bucketDao == null) {
-            bucketDao = new BucketDaoJdbcImpl(connection);
+            bucketDao = new BucketDaoHibernateImpl();
         }
         return bucketDao;
     }
@@ -79,7 +79,7 @@ public class Factory {
 
     public static UserDao getUserDao() {
         if (userDao == null) {
-            userDao = new UserDaoJdbcImpl(connection);
+            userDao = new UserDaoHibernateImpl();
         }
         return userDao;
     }

@@ -4,14 +4,17 @@
         "http://hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name = "hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
-        <property name = "hibernate.connection.url">jdbc:mysql://localhost:3306/newdatabase?serverTimezone=UTC</property>
-        <property name = "hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/newdatabase?serverTimezone=UTC</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="connection.username">root</property>
         <property name="connection.password">729313</property>
         <property name="show_sql">true</property>
         <property name="hbm2ddl.auto">validate</property>
 
         <mapping class="mate.academy.shop.model.Item"/>
+        <mapping class="mate.academy.shop.model.Role"/>
+        <mapping class="mate.academy.shop.model.User"/>
+        <mapping class="mate.academy.shop.model.Bucket"/>
     </session-factory>
 </hibernate-configuration>

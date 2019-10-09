@@ -1,7 +1,23 @@
 package mate.academy.shop.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "roles")
 public class Role {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "role_id", columnDefinition = "INTEGER")
     private Long id;
+    @Column(name = "name", columnDefinition = "VARCHAR")
+    @Enumerated(EnumType.STRING)
     private RoleName roleName;
 
     public Role() {

@@ -31,21 +31,22 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
         String query = "INSERT INTO buckets (user_id) VALUES (?);";
         try (PreparedStatement statement = connection
                 .prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setLong(1, bucket.getUserId());
+            statement.setLong(1, bucket.getUser().getId());
             statement.executeUpdate();
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     Long bucketId = generatedKeys.getLong(1);
-                    addBucketForUser(bucket.getUserId(), bucketId);
+                    addBucketForUser(bucket.getUser().getId(), bucketId);
                     return get(bucketId);
                 }
             }
         } catch (SQLException e) {
-            logger.error("Can't create the bucket for user with id=" + bucket.getUserId());
+            logger.error("Can't create the bucket for user with id=" + bucket.getUser().getId());
         }
         return Optional.of(bucket);
     }
 
+    @Override
     public void addBucketForUser(Long userId, Long bucketId) {
         String query = "INSERT INTO users_buckets (user_id, bucket_id) VALUES (?, ?);";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -57,6 +58,7 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
         }
     }
 
+    @Override
     public Optional<Bucket> getBucketByUser(Long userId) {
         String query = "SELECT * FROM users_buckets where user_id=?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -142,7 +144,8 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
                 Long newUserId = resultSet.getLong(USER_ID_COLUMN);
                 Bucket bucket = new Bucket();
                 bucket.setId(newBucketId);
-                bucket.setUserId(newUserId);
+                UserDaoJdbcImpl userDaoJdbc = null;
+                bucket.setUser(userDaoJdbc.get(newBucketId).get());
                 bucket.setItems(getItemForBucket(bucketId));
                 return Optional.of(bucket);
             }
@@ -157,7 +160,7 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
         String query = "UPDATE buckets SET bucket_id=?, user_id=? WHERE bucket_id=?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, bucket.getId());
-            statement.setLong(2, bucket.getUserId());
+            statement.setLong(2, bucket.getUser().getId());
             statement.setLong(3, bucket.getId());
             statement.executeUpdate();
             return Optional.of(bucket);
