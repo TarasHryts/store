@@ -40,7 +40,6 @@ public class LoginController extends HttpServlet {
         String login = req.getParameter("login");
         String password = Util.hashPassword(req.getParameter("psw"),
                 userService.getByLogin(login).get().getSalt());
-        //String password = req.getParameter("psw");
         try {
             User user = userService.login(login, password).get();
             Cookie cookie = new Cookie("MATE", user.getToken());
