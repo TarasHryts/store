@@ -65,7 +65,7 @@ public class BucketDaoImpl implements BucketDao {
     }
 
     @Override
-    public List<Item> getItemForBucket(Long bucketId) {
+    public List<Item> getItemsFromBucket(Long bucketId) {
         return null;
     }
 

@@ -10,13 +10,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import mate.academy.shop.anotation.Dao;
+import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.dao.OrderDao;
+import mate.academy.shop.dao.UserDao;
 import mate.academy.shop.model.Order;
 import org.apache.log4j.Logger;
 
 @Dao
 public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
     private static Logger logger = Logger.getLogger(OrderDaoJdbcImpl.class);
+    @Inject
+    private static UserDao userDao;
 
     public OrderDaoJdbcImpl(Connection connection) {
         super(connection);
@@ -28,17 +32,17 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
         String query = "INSERT INTO orders (user_id) VALUES (?);";
         try (PreparedStatement statement = connection
                 .prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setLong(1, order.getUserId());
+            statement.setLong(1, order.getUser().getId());
             statement.executeUpdate();
             try (ResultSet generatedKey = statement.getGeneratedKeys()) {
                 if (generatedKey.next()) {
                     Long orderId = generatedKey.getLong(1);
-                    addOrderForUser(order.getUserId(), orderId);
+                    addOrderForUser(order.getUser().getId(), orderId);
                     return get(orderId);
                 }
             }
         } catch (SQLException e) {
-            logger.error("Can't create the order for user with id=" + order.getUserId());
+            logger.error("Can't create the order for user with id=" + order.getUser().getId());
         }
         return null;
     }
@@ -65,7 +69,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
                 Long newUserId = resultSet.getLong("user_id");
                 Order order = new Order();
                 order.setId(newOrderId);
-                order.setUserId(newUserId);
+                order.setUser(userDao.get(newUserId).get());
                 return Optional.of(order);
             }
         } catch (SQLException e) {
@@ -108,7 +112,7 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
         String query = "UPDATE orders SET order_id=?, user_id=? WHERE order_id=?;";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, order.getId());
-            statement.setLong(2, order.getUserId());
+            statement.setLong(2, order.getUser().getId());
             statement.setLong(3, order.getId());
             statement.executeUpdate();
             return Optional.of(order);

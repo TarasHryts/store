@@ -10,9 +10,9 @@ import mate.academy.shop.dao.RoleDao;
 import mate.academy.shop.dao.UserDao;
 import mate.academy.shop.dao.hibernate.BucketDaoHibernateImpl;
 import mate.academy.shop.dao.hibernate.ItemDaoHibernateImpl;
+import mate.academy.shop.dao.hibernate.OrderDaoHibernateImpl;
 import mate.academy.shop.dao.hibernate.RoleDaoHibernateImpl;
 import mate.academy.shop.dao.hibernate.UserDaoHibernateImpl;
-import mate.academy.shop.dao.jdbc.OrderDaoJdbcImpl;
 import mate.academy.shop.service.BucketService;
 import mate.academy.shop.service.ItemService;
 import mate.academy.shop.service.OrderService;
@@ -72,7 +72,7 @@ public class Factory {
 
     public static OrderDao getOrderDao() {
         if (orderDao == null) {
-            orderDao = new OrderDaoJdbcImpl(connection);
+            orderDao = new OrderDaoHibernateImpl();
         }
         return orderDao;
     }

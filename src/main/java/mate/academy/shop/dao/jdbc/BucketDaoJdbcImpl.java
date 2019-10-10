@@ -87,7 +87,7 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
     }
 
     @Override
-    public List<Item> getItemForBucket(Long bucketId) {
+    public List<Item> getItemsFromBucket(Long bucketId) {
         List<Item> list = new ArrayList<>();
         String query = "SELECT items.item_id, items.name, items.price FROM items "
                 + "INNER JOIN items_buckets ON items.item_id = items_buckets.item_id "
@@ -146,7 +146,7 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
                 bucket.setId(newBucketId);
                 UserDaoJdbcImpl userDaoJdbc = null;
                 bucket.setUser(userDaoJdbc.get(newBucketId).get());
-                bucket.setItems(getItemForBucket(bucketId));
+                bucket.setItems(getItemsFromBucket(bucketId));
                 return Optional.of(bucket);
             }
         } catch (SQLException e) {

@@ -57,7 +57,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     @Override
     public Optional<User> get(Long id) {
         String query = "SELECT * FROM users where user_id=?";
-        try (PreparedStatement statement = connection.prepareStatement(query);) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -79,7 +79,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     public Optional<User> update(User user) {
         String query = "UPDATE users SET name=?, surname=?, login=?, password=?, token=?, salt=? "
                 + "WHERE user_id=?;";
-        try (PreparedStatement statement = connection.prepareStatement(query);) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, user.getName());
             statement.setString(2, user.getSurname());
             statement.setString(3, user.getLogin());
@@ -110,7 +110,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     public List<User> getAllUsers() {
         List<User> list = new ArrayList<>();
         String query = "SELECT * FROM users;";
-        try (PreparedStatement statement = connection.prepareStatement(query);) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 list.add(new User(resultSet.getLong(USER_ID_COLUMN),

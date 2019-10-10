@@ -20,7 +20,7 @@ public interface BucketDao {
 
     void addItemToBucket(Long itemId, Long bucketId);
 
-    List<Item> getItemForBucket(Long bucketId);
+    List<Item> getItemsFromBucket(Long bucketId);
 
     void deleteAllItemsFromBucket(Long bucketId);
 
