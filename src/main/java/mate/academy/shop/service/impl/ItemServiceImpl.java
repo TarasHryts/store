@@ -44,6 +44,6 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> getItemForBucket(Long bucketId) {
-        return bucketDao.getItemForBucket(bucketId);
+        return bucketDao.getItemsFromBucket(bucketId);
     }
 }

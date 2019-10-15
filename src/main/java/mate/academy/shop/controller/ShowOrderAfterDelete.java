@@ -30,7 +30,7 @@ public class ShowOrderAfterDelete extends HttpServlet {
         Long userId = (Long) req.getSession(true).getAttribute("userId");
         Long bucketId = bucketService.getBucketByUser(userId).get().getId();
         List<Order> orders = orderService.getAllOrdersForUser(userId);
-        User user = userService.get(bucketService.get(bucketId).get().getUserId()).get();
+        User user = userService.get(bucketService.get(bucketId).get().getUser().getId()).get();
         req.setAttribute("orders", orders);
         req.setAttribute("user", user);
         req.getRequestDispatcher("/WEB-INF/views/showAllOrders.jsp").forward(req, resp);

@@ -15,9 +15,9 @@ import org.apache.log4j.Logger;
 
 @Dao
 public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
+    private static Logger logger = Logger.getLogger(RoleDaoJdbcImpl.class);
     private static final String ROLE_ID_COLUMN = "role_id";
     private static final String ROLE_NAME_COLUMN = "name";
-    private static Logger logger = Logger.getLogger(RoleDaoJdbcImpl.class);
 
     public RoleDaoJdbcImpl(Connection connection) {
         super(connection);
@@ -27,7 +27,7 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
     @Override
     public Optional<Role> create(Role role) {
         String query = "INSERT INTO roles (name) VALUES (?);";
-        try (PreparedStatement statement = connection.prepareStatement(query);) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setString(1, role.getRoleName().getName());
             statement.executeUpdate();
             return Optional.of(role);
@@ -40,7 +40,7 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
     @Override
     public Optional<Role> get(Long id) {
         String query = "SELECT * FROM newdatabase.roles where role_id=?;";
-        try (PreparedStatement statement = connection.prepareStatement(query);) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -74,7 +74,7 @@ public class RoleDaoJdbcImpl extends AbstractDao<Role> implements RoleDao {
     @Override
     public void delete(Role role) {
         String query = "DELETE FROM roles WHERE role_id=?;";
-        try (PreparedStatement statement = connection.prepareStatement(query);) {
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setLong(1, role.getId());
             statement.executeUpdate();
         } catch (SQLException e) {

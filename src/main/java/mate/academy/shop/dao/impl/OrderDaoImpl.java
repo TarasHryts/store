@@ -32,7 +32,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getByUser(Long userId) {
         return Storage.orders.stream()
-                .filter(x -> userId.equals(x.getUserId()))
+                .filter(x -> userId.equals(x.getUser().getId()))
                 .collect(Collectors.toList());
     }
 

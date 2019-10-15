@@ -29,7 +29,7 @@ public class BucketServiceImpl implements BucketService {
 
     @Override
     public List<Item> getAllItems(Long bucketId) {
-        return bucketDao.getItemForBucket(bucketId);
+        return bucketDao.getItemsFromBucket(bucketId);
     }
 
     @Override

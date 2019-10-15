@@ -3,6 +3,7 @@ package mate.academy.shop.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javax.transaction.Transactional;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.anotation.Service;
 import mate.academy.shop.dao.BucketDao;
@@ -44,11 +45,13 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.update(order);
     }
 
+    @Transactional
     @Override
     public Optional<Order> completeOrder(List<Item> items, Long userId) {
         List<Item> itemList = new ArrayList<>(items);
         Order order = new Order();
-        order.setUserId(userId);
+
+        order.setUser(userDao.get(userId).get());
         order.setId(orderDao.create(order).get().getId());
         Long bucketId = bucketDao.getBucketByUser(userId).get().getId();
         for (Item item : itemList) {
