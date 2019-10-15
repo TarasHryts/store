@@ -1,16 +1,14 @@
-# Internet Shop
-
 
 ## Content
-- [Project Information](#Project Information)
-- [If you want to use this project](#If you want to use this project)
-- [Implementation Information](#Implementation Information)
-- [Contacts](#Contacts)
+- [Project Information](#information")
+- [If you want to use this project](#use)
+- [Implementation Information](#implementation)
+- [Contacts](#contacts)
 
-## Project Information
+## <a name="information"></a>Project Information
 This is a typical training project where we can register and authorize a new user in this web application.
 There are also controllers to buy items by users.
-## If you want to use this project
+## <a name="use"></a>If you want to use this project
 1. You have to "clone" on your GitHub or "download" this project;
     * If you selected to "download" the project then 
  start your Intellij IDEA and choose the "Import Project" and then choose as "Maven" project 
@@ -24,7 +22,7 @@ There are also controllers to buy items by users.
 7. Update Factory.class (connection)
 8. Update log4j.properties
 9. Update pom.xml for your configuration 
-## Implementation Information
+## <a name="implementation"></a>Implementation Information
 * Java 11
 * Maven 4.0.0
 * MavenCheckstyle 3.1.0
@@ -33,7 +31,7 @@ There are also controllers to buy items by users.
 * Hibernate 5.4.5
 * Log4j 1.2.17
 
-## Contacts
+## <a name="contacts"></a>Contacts
 * Author: Hryts Taras
 * Facebook: [My Facebook](https://www.facebook.com/profile.php?id=100008618806721@)
 * Gmail: [Email Me](tarashryts@gmail.com@)
