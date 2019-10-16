@@ -12,8 +12,8 @@
 </head>
 <body>
 <H1>ADMIN MENU</H1>
-<a href="/shop_war_exploded/logout"><br/>Logout</a>
-<a href="/shop_war_exploded/allItemsAdmin"><br/>List Of Item</a>
-<a href="/shop_war_exploded/servlet/getAllUsers"><br/>List Of Users</a>
+<a href="${pageContext.request.contextPath}/logout"><br/>Logout</a>
+<a href="${pageContext.request.contextPath}/allItemsAdmin"><br/>List Of Item</a>
+<a href="${pageContext.request.contextPath}/servlet/getAllUsers"><br/>List Of Users</a>
 </body>
 </html>

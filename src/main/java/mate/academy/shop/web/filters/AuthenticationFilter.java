@@ -17,6 +17,7 @@ import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class AuthenticationFilter implements Filter {
+    private static String COOKIE_NAME = "SHOP";
     private static Logger logger = Logger.getLogger(AuthenticationFilter.class);
     @Inject
     private static UserService userService;
@@ -36,7 +37,7 @@ public class AuthenticationFilter implements Filter {
         }
         boolean isLoggedIn = false;
         for (Cookie cookie : req.getCookies()) {
-            if (cookie.getName().equals("MATE")) {
+            if (cookie.getName().equals(COOKIE_NAME)) {
                 Optional<User> user = userService.getByToken(cookie.getValue());
                 if (user.isPresent()) {
                     logger.info("User " + user.get().getLogin() + " was authenticated");

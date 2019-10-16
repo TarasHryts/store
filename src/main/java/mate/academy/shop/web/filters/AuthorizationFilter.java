@@ -23,6 +23,7 @@ import mate.academy.shop.model.User;
 import mate.academy.shop.service.UserService;
 
 public class AuthorizationFilter implements Filter {
+    private static String COOKIE_NAME = "SHOP";
     public static final String EMPTY_STRING = "";
     @Inject
     private static UserService userService;
@@ -62,7 +63,7 @@ public class AuthorizationFilter implements Filter {
         }
         String token = null;
         for (Cookie cookie : req.getCookies()) {
-            if (cookie.getName().equals("MATE")) {
+            if (cookie.getName().equals(COOKIE_NAME)) {
                 token = cookie.getValue();
                 break;
             }

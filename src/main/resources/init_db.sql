@@ -130,6 +130,9 @@ CREATE TABLE `roles` (
   `name` varchar(45) NOT NULL,
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
+
+INSERT INTO roles (role_id, name) VALUES (1, 'admin')
+INSERT INTO roles (role_id, name) VALUES (2, 'user')
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

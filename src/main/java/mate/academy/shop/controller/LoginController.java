@@ -20,6 +20,7 @@ import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class LoginController extends HttpServlet {
+    private static String COOKIE_NAME = "SHOP";
     private static final Logger logger = Logger.getLogger(LoginController.class);
     @Inject
     private static UserService userService;
@@ -42,7 +43,7 @@ public class LoginController extends HttpServlet {
                 userService.getByLogin(login).get().getSalt());
         try {
             User user = userService.login(login, password).get();
-            Cookie cookie = new Cookie("MATE", user.getToken());
+            Cookie cookie = new Cookie(COOKIE_NAME, user.getToken());
             resp.addCookie(cookie);
             HttpSession session = req.getSession(true);
             session.setAttribute("userId", user.getId());

@@ -12,7 +12,7 @@
 </head>
 <body>
 <div>${errorMsg}</div>
-<form action="/shop_war_exploded/login" method="post">
+<form action="${pageContext.request.contextPath}/login" method="post">
     <div class="container">
         <h1>Login</h1>
         <p>Please fill in this form to login.</p>

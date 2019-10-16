@@ -7,7 +7,6 @@ import mate.academy.shop.anotation.Dao;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.dao.BucketDao;
 import mate.academy.shop.dao.ItemDao;
-import mate.academy.shop.dao.UserDao;
 import mate.academy.shop.factory.HibernateUtil;
 import mate.academy.shop.model.Bucket;
 import mate.academy.shop.model.Item;
@@ -21,8 +20,6 @@ public class BucketDaoHibernateImpl implements BucketDao {
     private static final Logger logger = Logger.getLogger(BucketDaoHibernateImpl.class);
     @Inject
     private static ItemDao itemDao;
-    @Inject
-    private static UserDao userDao;
 
     @Override
     public Optional<Bucket> create(Bucket bucket) {

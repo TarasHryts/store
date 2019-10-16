@@ -15,7 +15,6 @@ import org.apache.log4j.Logger;
 
 public class GetAllOrdersController extends HttpServlet {
     private static final Logger logger = Logger.getLogger(GetAllOrdersController.class);
-
     @Inject
     private static OrderService orderService;
     @Inject
