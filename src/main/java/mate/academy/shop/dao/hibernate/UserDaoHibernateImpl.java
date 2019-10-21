@@ -27,7 +27,7 @@ public class UserDaoHibernateImpl implements UserDao {
             userId = (Long) session.save(user);
             transaction.commit();
         } catch (Exception e) {
-            logger.error("Can't create the user with name=" + user.getName());
+            logger.error("Can't create the user with name=" + user.getName(), e);
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -46,7 +46,7 @@ public class UserDaoHibernateImpl implements UserDao {
             User user = session.get(User.class, id);
             return Optional.of(user);
         } catch (Exception e) {
-            logger.error("Can't get user by id=" + id);
+            logger.error("Can't get user by id=" + id, e);
         }
         return null;
     }
@@ -61,7 +61,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.update(user);
             transaction.commit();
         } catch (Exception e) {
-            logger.error("Can't update the user with id=" + user.getId());
+            logger.error("Can't update the user with id=" + user.getId(), e);
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -83,7 +83,7 @@ public class UserDaoHibernateImpl implements UserDao {
             session.delete(get(id).get());
             transaction.commit();
         } catch (Exception e) {
-            logger.error("Can't delete the user with id=" + id);
+            logger.error("Can't delete the user with id=" + id, e);
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -99,7 +99,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             return session.createQuery("FROM User").list();
         } catch (Exception e) {
-            logger.error("Can't get users");
+            logger.error("Can't get users", e);
         }
         return null;
     }
@@ -115,7 +115,7 @@ public class UserDaoHibernateImpl implements UserDao {
                 return Optional.of(user);
             }
         } catch (Exception e) {
-            logger.error("Incorrect username or password");
+            logger.error("Incorrect username or password", e);
         }
         return null;
     }
@@ -128,7 +128,7 @@ public class UserDaoHibernateImpl implements UserDao {
             List<User> list = query.list();
             return list.stream().findFirst();
         } catch (Exception e) {
-            logger.error("Can't get user with token=" + token);
+            logger.error("Can't get user with token=" + token, e);
         }
         return Optional.empty();
     }
@@ -139,7 +139,7 @@ public class UserDaoHibernateImpl implements UserDao {
             Query query = session.createQuery("FROM User WHERE login=:login");
             return query.setParameter("login", login).stream().findFirst();
         } catch (Exception e) {
-            logger.error("Can't get user with token=" + login);
+            logger.error("Can't get user with token=" + login, e);
         }
         return Optional.empty();
     }

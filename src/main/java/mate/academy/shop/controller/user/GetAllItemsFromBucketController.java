@@ -11,8 +11,8 @@ import mate.academy.shop.model.Item;
 import mate.academy.shop.service.BucketService;
 import org.apache.log4j.Logger;
 
-public class GetBucketController extends HttpServlet {
-    private static final Logger logger = Logger.getLogger(GetBucketController.class);
+public class GetAllItemsFromBucketController extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(GetAllItemsFromBucketController.class);
     @Inject
     private static BucketService bucketService;
 

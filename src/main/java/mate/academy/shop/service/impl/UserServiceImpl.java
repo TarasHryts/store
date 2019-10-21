@@ -14,7 +14,7 @@ import mate.academy.shop.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private static final Long DEFAULT_ROLE = 58L;
+    private static final Long USER_ROLE = 58L;
     @Inject
     private static UserDao userDao;
     @Inject
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     public Optional<User> create(User user) {
         user.setToken(getToken());
         User newUser = userDao.create(user).get();
-        roleDao.setRoleForUser(DEFAULT_ROLE, newUser.getId());
+        roleDao.setRoleForUser(USER_ROLE, newUser.getId());
         newUser.setRoles(roleDao.getAllRoleForUser(newUser.getId()));
         return Optional.of(newUser);
     }
