@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import mate.academy.shop.factory.generators.ItemIdGenerator;
 
 @Entity
 @Table(name = "items")
@@ -18,12 +17,6 @@ public class Item {
     private String name;
     @Column(name = "price", columnDefinition = "DECIMAL")
     private Double price;
-
-    public Item(String name, Double price) {
-        this.id = ItemIdGenerator.getIdGenerator();
-        this.name = name;
-        this.price = price;
-    }
 
     public Item(Long id) {
         this.id = id;

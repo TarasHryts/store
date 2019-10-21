@@ -49,7 +49,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            logger.error("Can't create the user with name=" + user.getName());
+            logger.error("Can't create the user with name=" + user.getName(), e);
         }
         return null;
     }
@@ -70,7 +70,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                         resultSet.getString(USER_TOKEN_COLUMN)));
             }
         } catch (SQLException e) {
-            logger.error("Can't get user by id=" + id);
+            logger.error("Can't get user by id=" + id, e);
         }
         return null;
     }
@@ -90,7 +90,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.executeUpdate();
             return Optional.of(user);
         } catch (SQLException e) {
-            logger.error("Can't update the user with id=" + user.getId());
+            logger.error("Can't update the user with id=" + user.getId(), e);
         }
         return null;
     }
@@ -102,7 +102,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.error("Can't delete the user with id=" + id);
+            logger.error("Can't delete the user with id=" + id, e);
         }
     }
 
@@ -122,7 +122,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                         resultSet.getString(USER_TOKEN_COLUMN)));
             }
         } catch (SQLException e) {
-            logger.error("Can't get users");
+            logger.error("Can't get users", e);
         }
         return list;
     }
@@ -150,7 +150,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                 return Optional.of(user);
             }
         } catch (SQLException e) {
-            logger.error("Incorrect username or password");
+            logger.error("Incorrect username or password", e);
         }
         return null;
     }
@@ -171,7 +171,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                         resultSet.getString(USER_TOKEN_COLUMN)));
             }
         } catch (SQLException e) {
-            logger.error("Can't get user with token=" + token);
+            logger.error("Can't get user with token=" + token, e);
         }
         return Optional.empty();
     }
@@ -192,7 +192,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
                         resultSet.getString(USER_TOKEN_COLUMN)));
             }
         } catch (SQLException e) {
-            logger.error("Can't get user with token=" + login);
+            logger.error("Can't get user with token=" + login, e);
         }
         return Optional.empty();
     }

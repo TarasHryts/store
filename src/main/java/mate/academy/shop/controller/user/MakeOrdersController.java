@@ -11,13 +11,10 @@ import mate.academy.shop.model.Item;
 import mate.academy.shop.model.Order;
 import mate.academy.shop.service.BucketService;
 import mate.academy.shop.service.OrderService;
-import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class MakeOrdersController extends HttpServlet {
     private static final Logger logger = Logger.getLogger(MakeOrdersController.class);
-    @Inject
-    private static UserService userService;
     @Inject
     private static OrderService orderService;
     @Inject

@@ -16,10 +16,12 @@ import mate.academy.shop.dao.hibernate.UserDaoHibernateImpl;
 import mate.academy.shop.service.BucketService;
 import mate.academy.shop.service.ItemService;
 import mate.academy.shop.service.OrderService;
+import mate.academy.shop.service.RoleService;
 import mate.academy.shop.service.UserService;
 import mate.academy.shop.service.impl.BucketServiceImpl;
 import mate.academy.shop.service.impl.ItemServiceImpl;
 import mate.academy.shop.service.impl.OrderServiceImpl;
+import mate.academy.shop.service.impl.RoleServiceImpl;
 import mate.academy.shop.service.impl.UserServiceImpl;
 import org.apache.log4j.Logger;
 
@@ -48,6 +50,7 @@ public class Factory {
     private static ItemService itemService;
     private static OrderService orderService;
     private static UserService userService;
+    private static RoleService roleService;
 
     public static RoleDao getRoleDao() {
         if (roleDao == null) {
@@ -110,5 +113,12 @@ public class Factory {
             userService = new UserServiceImpl();
         }
         return userService;
+    }
+
+    public static RoleService getRoleService() {
+        if (roleService == null) {
+            roleService = new RoleServiceImpl();
+        }
+        return roleService;
     }
 }

@@ -42,7 +42,7 @@
 
     <servlet>
         <servlet-name>bucket</servlet-name>
-        <servlet-class>mate.academy.shop.controller.user.GetBucketController</servlet-class>
+        <servlet-class>mate.academy.shop.controller.user.GetAllItemsFromBucketController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>bucket</servlet-name>

@@ -9,7 +9,6 @@ import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.model.Bucket;
 import mate.academy.shop.model.User;
 import mate.academy.shop.service.BucketService;
-import mate.academy.shop.service.ItemService;
 import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
@@ -19,8 +18,6 @@ public class AddToBucketController extends HttpServlet {
     private static BucketService bucketService;
     @Inject
     private static UserService userService;
-    @Inject
-    private static ItemService itemService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

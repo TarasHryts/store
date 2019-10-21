@@ -34,7 +34,7 @@
         </tr>
     </c:forEach>
 </table>
-<a href="/shop_war_exploded/servlet/getAllItems">Сontinue Shopping</a>
+<a href="${pageContext.request.contextPath}/servlet/getAllItems">Сontinue Shopping</a>
 
 </body>
 </html>

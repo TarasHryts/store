@@ -5,7 +5,6 @@ import java.util.Optional;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.anotation.Service;
 import mate.academy.shop.dao.BucketDao;
-import mate.academy.shop.dao.ItemDao;
 import mate.academy.shop.model.Bucket;
 import mate.academy.shop.model.Item;
 import mate.academy.shop.service.BucketService;
@@ -14,8 +13,6 @@ import mate.academy.shop.service.BucketService;
 public class BucketServiceImpl implements BucketService {
     @Inject
     private static BucketDao bucketDao;
-    @Inject
-    private static ItemDao itemDao;
 
     @Override
     public Optional<Bucket> create(Bucket bucket) {

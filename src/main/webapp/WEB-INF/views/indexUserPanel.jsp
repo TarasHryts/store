@@ -12,9 +12,9 @@
 </head>
 <body>
 <H1>USER MENU</H1>
-<a href="/shop_war_exploded/logout"><br/>Logout</a>
-<a href="/shop_war_exploded/servlet/getAllItems"><br/>List Of Item</a>
-<a href="/shop_war_exploded/servlet/bucket"><br/>List Of Items In Bucket</a>
-<a href="/shop_war_exploded/servlet/showAllOrders"><br/>List Of Orders</a>
+<a href="${pageContext.request.contextPath}/logout"><br/>Logout</a>
+<a href="${pageContext.request.contextPath}/servlet/getAllItems"><br/>List Of Item</a>
+<a href="${pageContext.request.contextPath}/servlet/bucket"><br/>List Of Items In Bucket</a>
+<a href="${pageContext.request.contextPath}/servlet/showAllOrders"><br/>List Of Orders</a>
 </body>
 </html>

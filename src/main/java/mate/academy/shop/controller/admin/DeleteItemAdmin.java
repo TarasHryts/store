@@ -7,14 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.service.ItemService;
-import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class DeleteItemAdmin extends HttpServlet {
     private static final Logger logger = Logger.getLogger(DeleteItemAdmin.class);
-
-    @Inject
-    private static UserService userService;
     @Inject
     private static ItemService itemService;
 

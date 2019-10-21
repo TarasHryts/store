@@ -33,7 +33,7 @@ Users:
                 <c:out value="${user.name}"/>
             </td>
             <td>
-                <a href="/shop_war_exploded/servlet/showAllOrders?user_id=${user.id}">Show All Orders</a>
+                <a href="${pageContext.request.contextPath}/servlet/showAllOrders?user_id=${user.id}">Show All Orders</a>
             </td>
         </tr>
     </c:forEach>

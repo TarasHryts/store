@@ -9,18 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.model.Item;
 import mate.academy.shop.service.BucketService;
-import mate.academy.shop.service.ItemService;
-import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
-public class GetBucketController extends HttpServlet {
-    private static final Logger logger = Logger.getLogger(GetBucketController.class);
-    @Inject
-    private static UserService userService;
+public class GetAllItemsFromBucketController extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(GetAllItemsFromBucketController.class);
     @Inject
     private static BucketService bucketService;
-    @Inject
-    private static ItemService itemService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

@@ -11,6 +11,7 @@ import mate.academy.shop.factory.Factory;
 import mate.academy.shop.service.BucketService;
 import mate.academy.shop.service.ItemService;
 import mate.academy.shop.service.OrderService;
+import mate.academy.shop.service.RoleService;
 import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
@@ -29,6 +30,7 @@ public class AnnotatedClassMap {
         classMap.put(ItemService.class, Factory.getItemService());
         classMap.put(OrderService.class, Factory.getOrderService());
         classMap.put(UserService.class, Factory.getUserService());
+        classMap.put(RoleService.class, Factory.getRoleService());
         logger.info("Data successfully added");
     }
 

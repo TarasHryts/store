@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.model.Item;
-import mate.academy.shop.service.BucketService;
 import mate.academy.shop.service.ItemService;
 import org.apache.log4j.Logger;
 
@@ -16,8 +15,6 @@ public class GetAllItemsControllerAdmin extends HttpServlet {
     private static final Logger logger = Logger.getLogger(GetAllItemsControllerAdmin.class);
     @Inject
     private static ItemService itemService;
-    @Inject
-    private static BucketService bucketService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)

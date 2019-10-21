@@ -5,13 +5,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import mate.academy.shop.anotation.Inject;
-import mate.academy.shop.service.ItemService;
 import org.apache.log4j.Logger;
 
 public class IndexController extends HttpServlet {
-    @Inject
-    private static ItemService itemService;
     private static final Logger logger = Logger.getLogger(IndexController.class);
 
     @Override

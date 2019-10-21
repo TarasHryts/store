@@ -19,7 +19,7 @@ public class Util {
             messageDigest.update(salt);
             byte[] digest = messageDigest.digest(password.getBytes());
             for (byte b : digest) {
-                hashedPassword.append(String.format("%02x",b));
+                hashedPassword.append(String.format("%02x", b));
             }
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();

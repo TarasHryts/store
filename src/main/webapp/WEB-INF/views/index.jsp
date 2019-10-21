@@ -12,7 +12,7 @@
 </head>
 <body>
 <H1>MENU</H1>
-<a href="/shop_war_exploded/registration"><br/>Registration</a>
-<a href="/shop_war_exploded/login"><br/>Login</a>
+<a href="${pageContext.request.contextPath}/registration"><br/>Registration</a>
+<a href="${pageContext.request.contextPath}/login"><br/>Login</a>
 </body>
 </html>

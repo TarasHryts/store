@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 import mate.academy.shop.anotation.Inject;
 import mate.academy.shop.anotation.Service;
 import mate.academy.shop.dao.BucketDao;
-import mate.academy.shop.dao.ItemDao;
 import mate.academy.shop.dao.OrderDao;
 import mate.academy.shop.dao.UserDao;
 import mate.academy.shop.model.Item;
@@ -20,8 +19,6 @@ public class OrderServiceImpl implements OrderService {
     private static OrderDao orderDao;
     @Inject
     private static UserDao userDao;
-    @Inject
-    private static ItemDao itemDao;
     @Inject
     private static BucketDao bucketDao;
 

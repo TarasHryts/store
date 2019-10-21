@@ -16,15 +16,18 @@ import mate.academy.shop.exceptions.AuthenticationException;
 import mate.academy.shop.factory.Util;
 import mate.academy.shop.model.Role;
 import mate.academy.shop.model.User;
+import mate.academy.shop.service.RoleService;
 import mate.academy.shop.service.UserService;
 import org.apache.log4j.Logger;
 
 public class LoginController extends HttpServlet {
+    private static String COOKIE_NAME = "SHOP";
     private static final Logger logger = Logger.getLogger(LoginController.class);
     @Inject
     private static UserService userService;
+
     @Inject
-    private static RoleDao roleDao;
+    private static RoleService roleService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -42,7 +45,7 @@ public class LoginController extends HttpServlet {
                 userService.getByLogin(login).get().getSalt());
         try {
             User user = userService.login(login, password).get();
-            Cookie cookie = new Cookie("MATE", user.getToken());
+            Cookie cookie = new Cookie(COOKIE_NAME, user.getToken());
             resp.addCookie(cookie);
             HttpSession session = req.getSession(true);
             session.setAttribute("userId", user.getId());
@@ -59,7 +62,8 @@ public class LoginController extends HttpServlet {
     }
 
     private boolean verifyRole(User user, Role.RoleName roleName) {
-        return roleDao.getAllRoleForUser(user.getId())
+
+        return roleService.getAllRoleForUser(user.getId())
                 .stream().anyMatch(x -> x.getRoleName().equals(roleName));
     }
 }
